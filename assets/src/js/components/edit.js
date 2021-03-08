@@ -9,6 +9,7 @@ const { Component, Fragment, useEffect } = wp.element;
 const { withSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
 const { BlockControls } = wp.blockEditor;
+const { compose } = wp.compose;
 
 export const StrongTestimonialViewEdit = (props) => {
 	const { attributes, setAttributes } = props;
@@ -110,4 +111,19 @@ export const StrongTestimonialViewEdit = (props) => {
 	];
 };
 
-export default StrongTestimonialViewEdit;
+const applyWithSelect = withSelect((select, props) => {
+	const { getEntityRecords } = select('core');
+	const query = {
+		post_status: 'publish',
+		per_page: -1
+	};
+
+	return {
+		testimonials: getEntityRecords('postType', 'wpm-testimonial', query) || []
+	};
+});
+
+const applyWithFilters = wp.components.withFilters('wpst.StrongTestimonialViewEdit');
+
+export default compose(applyWithSelect, applyWithFilters)(StrongTestimonialViewEdit);
+

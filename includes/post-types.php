@@ -76,6 +76,7 @@ function wpmtst_get_cpt_defaults() {
 		'items_list'            => __( 'Testimonials list', 'strong-testimonials' ),
 		'menu_name'             => _x( 'Testimonials', 'admin menu name', 'strong-testimonials' ),
 		'name_admin_bar'        => _x( 'Testimonial', 'admin bar menu name', 'strong-testimonials' ),
+		
 	);
 
 	$supports = array(
@@ -96,6 +97,7 @@ function wpmtst_get_cpt_defaults() {
 		'show_in_menu'        => true,
 		'show_in_nav_menus'   => true,
 		'show_in_admin_bar'   => true,
+		'show_in_rest'        => true,
 		'menu_position'       => 20,
 		'menu_icon'           => 'dashicons-editor-quote',
 		'capability_type'     => 'post',
