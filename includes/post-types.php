@@ -38,6 +38,15 @@ function wpmtst_register_cpt() {
 add_action( 'init', 'wpmtst_register_cpt', 12 );
 
 
+function register_post_meta_rest() {
+	register_rest_field( 'wpm-testimonial', 'meta', array(
+		'get_callback' => function( $post_arr ) {
+			return get_post_meta( $post_arr['id'], false );
+		},
+	) );
+}
+
+add_action( 'rest_api_init', 'register_post_meta_rest' );
 /**
  * Return default values for our custom post type.
  *
