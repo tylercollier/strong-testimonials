@@ -80,9 +80,13 @@ exports.StrongTestimonialViewEdit = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _inspector = __webpack_require__(5);
+var _inspector = __webpack_require__(6);
 
 var _inspector2 = _interopRequireDefault(_inspector);
+
+var _StrongTestimonialsViewForm = __webpack_require__(5);
+
+var _StrongTestimonialsViewForm2 = _interopRequireDefault(_StrongTestimonialsViewForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -105,14 +109,13 @@ var BlockControls = wp.blockEditor.BlockControls;
 var compose = wp.compose.compose;
 var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function StrongTestimonialViewEdit(props) {
 	var attributes = props.attributes,
-	    setAttributes = props.setAttributes;
+	    setAttributes = props.setAttributes,
+	    testimonials = props.testimonials;
 	var id = attributes.id,
 	    views = attributes.views,
 	    status = attributes.status,
-	    testimonials = attributes.testimonials,
 	    mode = attributes.mode;
 
-	console.log(props);
 
 	useEffect(function () {
 		setAttributes({ status: 'ready', views: st_views.views });
@@ -123,6 +126,15 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 	}, []);
 	var _onIdChange = function _onIdChange(id) {
 		props.setAttributes({ status: 'ready', id: id });
+	};
+
+	// Get only the required view settings to pass in the appropiate
+	// element
+	var getSelectedView = function getSelectedView(id) {
+		var view = st_views.views.filter(function (view) {
+			return view.id == id;
+		});
+		return view[0];
 	};
 
 	var selectOptions = function selectOptions() {
@@ -165,63 +177,69 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 		)];
 	}
 
-	return [React.createElement(
-		Fragment,
-		null,
-		React.createElement(_inspector2.default, _extends({ onIdChange: function onIdChange(id) {
-				return _onIdChange(id);
-			}, selectOptions: selectOptions() }, props)),
+	if (id == 0) {
 		React.createElement(
-			'div',
-			{ className: 'st-block-preview' },
+			Fragment,
+			null,
+			React.createElement(_inspector2.default, _extends({ onIdChange: function onIdChange(id) {
+					return _onIdChange(id);
+				}, selectOptions: selectOptions() }, props)),
 			React.createElement(
 				'div',
-				{ 'class': 'st-block-preview__content' },
-				React.createElement('div', { className: 'st-block-preview__logo' }),
-				st_views.views.length === 0 && React.createElement(
-					Fragment,
-					null,
-					React.createElement(
-						'h6',
+				{ className: 'st-block-preview' },
+				React.createElement(
+					'div',
+					{ 'class': 'st-block-preview__content' },
+					React.createElement('div', { className: 'st-block-preview__logo' }),
+					st_views.views.length === 0 && React.createElement(
+						Fragment,
 						null,
-						__("You don't seem to have any views.")
+						React.createElement(
+							'h6',
+							null,
+							__("You don't seem to have any views.")
+						),
+						React.createElement(
+							Button,
+							{
+								href: st_views.adminURL + 'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=add',
+								target: '_blank',
+								isDefault: true
+							},
+							__('Add New View')
+						)
 					),
-					React.createElement(
-						Button,
-						{
-							href: st_views.adminURL + 'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=add',
-							target: '_blank',
-							isDefault: true
-						},
-						__('Add New View')
-					)
-				),
-				st_views.views.length > 0 && React.createElement(
-					Fragment,
-					null,
-					React.createElement(SelectControl, {
-						label: 'Select a view:',
-						className: 'st-view-select',
-						key: id,
-						value: id,
-						options: selectOptions(),
-						onChange: function onChange(value) {
-							return _onIdChange(parseInt(value));
-						}
-					}),
-					id != 0 && React.createElement(
-						Button,
-						{
-							target: '_blank',
-							href: st_views.adminURL + 'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=edit&id=' + id,
-							isSecondary: true
-						},
-						__('Edit Settings')
+					st_views.views.length > 0 && React.createElement(
+						Fragment,
+						null,
+						React.createElement(SelectControl, {
+							label: 'Select a view:',
+							className: 'st-view-select',
+							key: id,
+							value: id,
+							options: selectOptions(),
+							onChange: function onChange(value) {
+								return _onIdChange(parseInt(value));
+							}
+						}),
+						id != 0 && React.createElement(
+							Button,
+							{
+								target: '_blank',
+								href: st_views.adminURL + 'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=edit&id=' + id,
+								isSecondary: true
+							},
+							__('Edit Settings')
+						)
 					)
 				)
 			)
-		)
-	)];
+		);
+	}
+
+	if (id != 0) {
+		return React.createElement(_StrongTestimonialsViewForm2.default, { view: getSelectedView(id) });
+	}
 };
 
 var applyWithSelect = withSelect(function (select, props) {
@@ -319,6 +337,211 @@ var strongTestimonialsView = new StrongTestimonialView();
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var __ = wp.i18n.__;
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment,
+    useEffect = _wp$element.useEffect;
+var withSelect = wp.data.withSelect;
+var _wp$components = wp.components,
+    SelectControl = _wp$components.SelectControl,
+    Spinner = _wp$components.Spinner,
+    Toolbar = _wp$components.Toolbar,
+    Button = _wp$components.Button;
+var BlockControls = wp.blockEditor.BlockControls;
+var compose = wp.compose.compose;
+var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function StrongTestimonialsViewForm(props) {
+	var template = props.template;
+
+	var requiredTextFields = [{ fieldName: 'client_name', renderName: 'Full Name', description: 'What is your full name ?' }, { fieldName: 'email', renderName: 'Email', description: 'What is you email adress?' }];
+	var optionalTextFields = [{ fieldName: 'company_name', renderName: 'Company Name', description: 'What is your company name ?' }, {
+		fieldName: 'company_website',
+		renderName: 'Company Website',
+		description: 'Does your company have a website ? '
+	}, { fieldName: 'post_title', renderName: 'Heading', description: 'A headline for your testimonial' }];
+	var textFields = [{ required: requiredTextFields }, { optional: optionalTextFields }];
+
+	return [React.createElement(
+		Fragment,
+		null,
+		React.createElement(
+			'div',
+			{ 'class': 'strong-view strong-form ' + template + ' wpmtst-' + template },
+			React.createElement(
+				'div',
+				{ id: 'wpmtst-form' },
+				React.createElement(
+					'div',
+					{ 'class': 'strong-form-inner' },
+					React.createElement(
+						'form',
+						{ id: 'wpmtst-submission-form' },
+						requiredTextFields.map(function (type, val) {
+							return [React.createElement(
+								'div',
+								{ 'class': 'form-field field-' + type.fieldName },
+								React.createElement(
+									'label',
+									{ 'for': 'wpmtst_' + type.fieldName, 'class': 'field-' + type.fieldName },
+									type.renderName
+								),
+								React.createElement('span', { 'class': 'required symbol' }),
+								React.createElement('input', {
+									id: 'wpmtst_' + type.fieldName,
+									type: 'text',
+									'class': 'text',
+									name: type.fieldName,
+									value: '',
+									placeholder: '',
+									required: '',
+									tabindex: '0'
+								}),
+								React.createElement(
+									'span',
+									{ 'class': 'after' },
+									type.description
+								)
+							)];
+						}),
+						optionalTextFields.map(function (type, val) {
+							return [React.createElement(
+								'div',
+								{ 'class': 'form-field field-' + type.fieldName },
+								React.createElement(
+									'label',
+									{ 'for': 'wpmtst_' + type.fieldName, 'class': 'field-' + type.fieldName },
+									type.renderName
+								),
+								React.createElement('input', {
+									id: 'wpmtst_' + type.fieldName,
+									type: 'text',
+									'class': 'text',
+									name: type.fieldName,
+									value: '',
+									placeholder: '',
+									required: '',
+									tabindex: '0'
+								}),
+								React.createElement(
+									'span',
+									{ 'class': 'after' },
+									type.description
+								)
+							)];
+						}),
+						React.createElement(
+							'div',
+							{ 'class': 'form-field field-post_content' },
+							React.createElement(
+								'label',
+								{ 'for': 'wpmtst_post_content', 'class': 'field-post_content' },
+								'Testimonial'
+							),
+							React.createElement('span', { 'class': 'required symbol' }),
+							React.createElement('textarea', {
+								id: 'wpmtst_post_content',
+								name: 'post_content',
+								'class': 'textarea',
+								required: '',
+								placeholder: '',
+								tabindex: '0'
+							}),
+							React.createElement(
+								'span',
+								{ 'class': 'after' },
+								'What do you think about us?'
+							)
+						),
+						React.createElement(
+							'div',
+							{ 'class': 'form-field field-featured_image' },
+							React.createElement(
+								'label',
+								{ 'for': 'wpmtst_featured_image', 'class': 'field-featured_image' },
+								'Photo'
+							),
+							React.createElement(
+								'div',
+								{ 'class': 'field-wrap' },
+								React.createElement('input', { id: 'wpmtst_featured_image', type: 'file', name: 'featured_image', tabindex: '0' })
+							),
+							React.createElement(
+								'span',
+								{ 'class': 'after' },
+								'Would you like to include a photo?'
+							)
+						),
+						React.createElement(
+							'div',
+							{ 'class': 'form-field field-star_rating' },
+							React.createElement(
+								'label',
+								{ 'for': 'wpmtst_star_rating', 'class': 'field-star_rating' },
+								'Star rating'
+							),
+							React.createElement(
+								'div',
+								{ 'class': 'strong-rating-wrapper field-wrap in-form' },
+								React.createElement(
+									'fieldset',
+									{
+										contenteditable: 'false',
+										id: 'wpmtst_star_rating',
+										name: 'star_rating',
+										'class': 'strong-rating',
+										'data-field-type': 'rating',
+										tabindex: '0'
+									},
+									React.createElement(
+										'legend',
+										null,
+										'rating fields'
+									),
+									React.createElement('input', {
+										type: 'radio',
+										id: 'star_rating-star0',
+										name: 'star_rating',
+										value: '0',
+										checked: 'checked'
+									}),
+									React.createElement('label', { 'for': 'star_rating-star0', title: 'No stars' }),
+									React.createElement('input', { type: 'radio', id: 'star_rating-star1', name: 'star_rating', value: '1' }),
+									React.createElement('label', { 'for': 'star_rating-star1', title: '1 star' }),
+									React.createElement('input', { type: 'radio', id: 'star_rating-star2', name: 'star_rating', value: '2' }),
+									React.createElement('label', { 'for': 'star_rating-star2', title: '2 stars' }),
+									React.createElement('input', { type: 'radio', id: 'star_rating-star3', name: 'star_rating', value: '3' }),
+									React.createElement('label', { 'for': 'star_rating-star3', title: '3 stars' }),
+									React.createElement('input', { type: 'radio', id: 'star_rating-star4', name: 'star_rating', value: '4' }),
+									React.createElement('label', { 'for': 'star_rating-star4', title: '4 stars' }),
+									React.createElement('input', { type: 'radio', id: 'star_rating-star5', name: 'star_rating', value: '5' }),
+									React.createElement('label', { 'for': 'star_rating-star5', title: '5 stars' })
+								)
+							),
+							React.createElement(
+								'span',
+								{ 'class': 'after' },
+								'Would you like to include star rating?'
+							)
+						)
+					)
+				)
+			)
+		)
+	)];
+};
+
+exports.default = StrongTestimonialsViewForm;
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

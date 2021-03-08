@@ -39,7 +39,11 @@ class Strong_Gutemberg {
     }
 
     public function render_view( $attributes ) {
-
+        $view_array       = wpmtst_get_view( $attributes['id'] );
+        $view             = unserialize( $view_array['value'] );
+        
+        wp_enqueue_style($view['template']);
+        
         if( 0 == count( $attributes ) ) {
             return;
         }
@@ -50,6 +54,14 @@ class Strong_Gutemberg {
 
         return "[testimonial_view id={$attributes['id']}]";
     }
+
+    // private function get_right_stylesheet( $view ) {
+    //     if( 'form' ==  $view['mode'] ) {
+    //         if( 'default-form' == $view['template'] ) {
+                
+    //         }
+    //     }
+    // }
 
 }
 

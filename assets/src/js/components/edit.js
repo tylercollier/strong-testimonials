@@ -1,4 +1,5 @@
 import Inspector from './inspector';
+import StrongTestimonialsViewForm from './StrongTestimonialsViewForm';
 
 /**
  * Wordpress deps
@@ -12,9 +13,8 @@ const { BlockControls } = wp.blockEditor;
 const { compose } = wp.compose;
 
 export const StrongTestimonialViewEdit = (props) => {
-	const { attributes, setAttributes } = props;
-	const { id, views, status, testimonials, mode } = attributes;
-	console.log(props);
+	const { attributes, setAttributes, testimonials } = props;
+	const { id, views, status, mode } = attributes;
 
 	useEffect(() => {
 		setAttributes({ status: 'ready', views: st_views.views });
@@ -25,6 +25,13 @@ export const StrongTestimonialViewEdit = (props) => {
 	}, []);
 	const onIdChange = (id) => {
 		props.setAttributes({ status: 'ready', id: id });
+	};
+
+	// Get only the required view settings to pass in the appropiate
+	// element
+	const getSelectedView = (id) => {
+		let view = st_views.views.filter((view) => view.id == id);
+		return view[0];
 	};
 
 	const selectOptions = () => {
@@ -59,7 +66,7 @@ export const StrongTestimonialViewEdit = (props) => {
 		];
 	}
 
-	return [
+	if (id == 0) {
 		<Fragment>
 			<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
 			<div className="st-block-preview">
@@ -107,8 +114,13 @@ export const StrongTestimonialViewEdit = (props) => {
 					)}
 				</div>
 			</div>
-		</Fragment>
-	];
+		</Fragment>;
+	}
+
+	if (id != 0) {
+		return <StrongTestimonialsViewForm view={getSelectedView(id)} />;
+	}
+	
 };
 
 const applyWithSelect = withSelect((select, props) => {
@@ -126,4 +138,3 @@ const applyWithSelect = withSelect((select, props) => {
 const applyWithFilters = wp.components.withFilters('wpst.StrongTestimonialViewEdit');
 
 export default compose(applyWithSelect, applyWithFilters)(StrongTestimonialViewEdit);
-
