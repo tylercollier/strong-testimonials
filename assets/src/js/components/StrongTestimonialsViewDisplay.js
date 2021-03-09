@@ -7,6 +7,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 
 	const { data, id } = view;
 
+    // Helper function to generate class names 
 	const getClassNamesByLayout = (layout, columns) => {
 		let classNames = `strong-content strong-${layout} columns-${columns}`;
 		if ('' == layout) {
