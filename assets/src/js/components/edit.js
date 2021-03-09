@@ -29,6 +29,7 @@ export const StrongTestimonialViewEdit = (props) => {
 			});
 			sortTestimonialsByDate(testimonials, view.data.order);
 		}
+
 	});
 	const onIdChange = (id) => {
 		props.setAttributes({ status: 'ready', id: id });

@@ -29,15 +29,29 @@ export const StrongTestimonialsViewDisplay = (props) => {
 				{testimonials.length > 0 && (
 					<Fragment>
 						{testimonials.map((testimonial, index) => {
-							return [
-								<STViewTestimonial
-									testimonial={testimonial}
-									index={index}
-									data={data}
-									convertDateToUnix={convertDateToUnix}
-									sortTestimonialsByDate={sortTestimonialsByDate}
-								/>
-							];
+							if (data.count != -1) {
+								if (index < data.count) {
+									return [
+										<STViewTestimonial
+											testimonial={testimonial}
+											index={index}
+											data={data}
+											convertDateToUnix={convertDateToUnix}
+											sortTestimonialsByDate={sortTestimonialsByDate}
+										/>
+									];
+								}
+							} else {
+								return [
+									<STViewTestimonial
+										testimonial={testimonial}
+										index={index}
+										data={data}
+										convertDateToUnix={convertDateToUnix}
+										sortTestimonialsByDate={sortTestimonialsByDate}
+									/>
+								];
+							}
 						})}
 					</Fragment>
 				)}
