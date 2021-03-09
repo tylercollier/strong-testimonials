@@ -6,7 +6,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 	const { testimonials, view, convertDateToUnix, sortTestimonialsByDate } = props;
 
 	const { data, id } = view;
-	console.log(data);
+
 	const getClassNamesByLayout = (layout, columns) => {
 		let classNames = `strong-content strong-${layout} columns-${columns}`;
 		if ('' == layout) {

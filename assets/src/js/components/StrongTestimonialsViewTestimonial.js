@@ -4,7 +4,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 	const { testimonial, index, data } = props;
 	const { id, title, content } = testimonial;
 	const { client_section } = data;
-    console.log(testimonial);
+
 	return [
 		<div className={`wpmtst-testimonial testimonial post-${id}`}>
 			<div className="wpmtst-testimonial-inner testimonial-inner">

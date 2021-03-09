@@ -1,5 +1,5 @@
 const StrongTestimonialsStyle = (props) => {
-	console.log(props);
+
 	const { data } = props.view;
 
 	const id = `.strong-view-id-${props.view.id}`;
