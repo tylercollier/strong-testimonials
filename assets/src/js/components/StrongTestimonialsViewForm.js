@@ -6,7 +6,8 @@ const { BlockControls } = wp.blockEditor;
 const { compose } = wp.compose;
 
 export const StrongTestimonialsViewForm = (props) => {
-	const {template } = props ;
+	const { template } = props.view.data;
+	const { id } = props.view.id;
 	let requiredTextFields = [
 		{ fieldName: 'client_name', renderName: 'Full Name', description: 'What is your full name ?' },
 		{ fieldName: 'email', renderName: 'Email', description: 'What is you email adress?' }
@@ -24,86 +25,86 @@ export const StrongTestimonialsViewForm = (props) => {
 
 	return [
 		<Fragment>
-			<div class={`strong-view strong-form ${template} wpmtst-${template}`}>
+			<div className={`strong-view strong-form strong-view-id-${props.view.id} ${template} wpmtst-${template}`}>
 				<div id="wpmtst-form">
-					<div class="strong-form-inner">
+					<div className="strong-form-inner">
 						<form id="wpmtst-submission-form">
 							{requiredTextFields.map((type, val) => {
 								return [
-									<div class={`form-field field-${type.fieldName}`}>
-										<label for={`wpmtst_${type.fieldName}`} class={`field-${type.fieldName}`}>
+									<div className={`form-field field-${type.fieldName}`}>
+										<label for={`wpmtst_${type.fieldName}`} className={`field-${type.fieldName}`}>
 											{type.renderName}
 										</label>
-										<span class="required symbol" />
+										<span className="required symbol" />
 										<input
 											id={`wpmtst_${type.fieldName}`}
 											type="text"
-											class="text"
+											className="text"
 											name={type.fieldName}
 											value=""
 											placeholder=""
 											required=""
 											tabindex="0"
 										/>
-										<span class="after">{type.description}</span>
+										<span className="after">{type.description}</span>
 									</div>
 								];
 							})}
 							{optionalTextFields.map((type, val) => {
 								return [
-									<div class={`form-field field-${type.fieldName}`}>
-										<label for={`wpmtst_${type.fieldName}`} class={`field-${type.fieldName}`}>
+									<div className={`form-field field-${type.fieldName}`}>
+										<label for={`wpmtst_${type.fieldName}`} className={`field-${type.fieldName}`}>
 											{type.renderName}
 										</label>
 
 										<input
 											id={`wpmtst_${type.fieldName}`}
 											type="text"
-											class="text"
+											className="text"
 											name={type.fieldName}
 											value=""
 											placeholder=""
 											required=""
 											tabindex="0"
 										/>
-										<span class="after">{type.description}</span>
+										<span className="after">{type.description}</span>
 									</div>
 								];
 							})}
-							<div class="form-field field-post_content">
-								<label for="wpmtst_post_content" class="field-post_content">
+							<div className="form-field field-post_content">
+								<label for="wpmtst_post_content" className="field-post_content">
 									Testimonial
 								</label>
-								<span class="required symbol" />
+								<span className="required symbol" />
 								<textarea
 									id="wpmtst_post_content"
 									name="post_content"
-									class="textarea"
+									className="textarea"
 									required=""
 									placeholder=""
 									tabindex="0"
 								/>
-								<span class="after">What do you think about us?</span>
+								<span className="after">What do you think about us?</span>
 							</div>
-							<div class="form-field field-featured_image">
-								<label for="wpmtst_featured_image" class="field-featured_image">
+							<div className="form-field field-featured_image">
+								<label for="wpmtst_featured_image" className="field-featured_image">
 									Photo
 								</label>
-								<div class="field-wrap">
+								<div className="field-wrap">
 									<input id="wpmtst_featured_image" type="file" name="featured_image" tabindex="0" />
 								</div>
-								<span class="after">Would you like to include a photo?</span>
+								<span className="after">Would you like to include a photo?</span>
 							</div>
-							<div class="form-field field-star_rating">
-								<label for="wpmtst_star_rating" class="field-star_rating">
+							<div className="form-field field-star_rating">
+								<label for="wpmtst_star_rating" className="field-star_rating">
 									Star rating
 								</label>
-								<div class="strong-rating-wrapper field-wrap in-form">
+								<div className="strong-rating-wrapper field-wrap in-form">
 									<fieldset
 										contenteditable="false"
 										id="wpmtst_star_rating"
 										name="star_rating"
-										class="strong-rating"
+										className="strong-rating"
 										data-field-type="rating"
 										tabindex="0"
 									>
@@ -128,7 +129,19 @@ export const StrongTestimonialsViewForm = (props) => {
 										<label for="star_rating-star5" title="5 stars" />
 									</fieldset>
 								</div>
-								<span class="after">Would you like to include star rating?</span>
+								<span className="after">Would you like to include star rating?</span>
+							</div>
+							<div className="form-field wpmtst-submit">
+								<label>
+									<input
+										type="submit"
+										id="wpmtst_submit_testimonial"
+										name="wpmtst_submit_testimonial"
+										value="Add Testimonial"
+										className="button"
+										tabindex="0"
+									/>
+								</label>
 							</div>
 						</form>
 					</div>

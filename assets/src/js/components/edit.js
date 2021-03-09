@@ -1,5 +1,6 @@
 import Inspector from './inspector';
 import StrongTestimonialsViewForm from './StrongTestimonialsViewForm';
+import StrongTestimonialsStyle from './StrongTestimonialsStyle';
 
 /**
  * Wordpress deps
@@ -118,9 +119,13 @@ export const StrongTestimonialViewEdit = (props) => {
 	}
 
 	if (id != 0) {
-		return <StrongTestimonialsViewForm view={getSelectedView(id)} />;
+		return [
+			<Fragment>
+				<StrongTestimonialsStyle view={getSelectedView(id)} />
+				<StrongTestimonialsViewForm view={getSelectedView(id)} />
+			</Fragment>
+		];
 	}
-	
 };
 
 const applyWithSelect = withSelect((select, props) => {

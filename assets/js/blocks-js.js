@@ -80,13 +80,17 @@ exports.StrongTestimonialViewEdit = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _inspector = __webpack_require__(6);
+var _inspector = __webpack_require__(7);
 
 var _inspector2 = _interopRequireDefault(_inspector);
 
-var _StrongTestimonialsViewForm = __webpack_require__(5);
+var _StrongTestimonialsViewForm = __webpack_require__(6);
 
 var _StrongTestimonialsViewForm2 = _interopRequireDefault(_StrongTestimonialsViewForm);
+
+var _StrongTestimonialsStyle = __webpack_require__(5);
+
+var _StrongTestimonialsStyle2 = _interopRequireDefault(_StrongTestimonialsStyle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -238,7 +242,12 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 	}
 
 	if (id != 0) {
-		return React.createElement(_StrongTestimonialsViewForm2.default, { view: getSelectedView(id) });
+		return [React.createElement(
+			Fragment,
+			null,
+			React.createElement(_StrongTestimonialsStyle2.default, { view: getSelectedView(id) }),
+			React.createElement(_StrongTestimonialsViewForm2.default, { view: getSelectedView(id) })
+		)];
 	}
 };
 
@@ -345,6 +354,44 @@ var strongTestimonialsView = new StrongTestimonialView();
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+var StrongTestimonialsStyle = function StrongTestimonialsStyle(props) {
+	console.log(props);
+	var data = props.view.data;
+
+
+	var id = '.strong-view-id-' + props.view.id;
+	var background = data.background;
+
+	var style = '';
+
+	if ('single' == background.type) {
+		style += id + ' .strong-form-inner { background: ' + background.color + '; }';
+	} else if ('gradient' == background.type) {
+		style += 'background: {' + background.gradient1 + '};\n\tbackground: -moz-linear-gradient(top, {' + background.grandient1 + '} 0%, {' + background.gradient2 + '}} 100%);\n\tbackground: -webkit-gradient(linear, left top, left bottom, color-stop(0%, {' + background.grandient1 + '}), color-stop(100%, {' + background.gradient2 + '}}));\n\tbackground: -webkit-linear-gradient(top,  {' + background.grandient1 + '} 0%, {' + background.gradient2 + '}} 100%);\n\tbackground: -o-linear-gradient(top, {' + background.grandient1 + '} 0%, {' + background.gradient2 + '}} 100%);\n\tbackground: -ms-linear-gradient(top, {' + background.grandient1 + '} 0%, {' + background.gradient2 + '}} 100%);\n\tbackground: linear-gradient(to bottom, {' + background.grandient1 + '} 0%, {' + background.gradient2 + '}} 100%);\n\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\'{' + background.grandient1 + '}\', endColorstr=\'{' + background.gradient2 + '}}\', GradientType=0);';
+	}
+
+	if ('custom' == data['font-color'].type) {
+		style += id + ' .strong-form-inner { color: ' + data['font-color'].color + ' }';
+	}
+	return [React.createElement('style', {
+		dangerouslySetInnerHTML: {
+			__html: '\n      \t\t\t\t' + style + '\n    \t\t\t\t'
+		}
+	})];
+};
+
+exports.default = StrongTestimonialsStyle;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
 var __ = wp.i18n.__;
 var _wp$element = wp.element,
     Component = _wp$element.Component,
@@ -359,7 +406,8 @@ var _wp$components = wp.components,
 var BlockControls = wp.blockEditor.BlockControls;
 var compose = wp.compose.compose;
 var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function StrongTestimonialsViewForm(props) {
-	var template = props.template;
+	var template = props.view.data.template;
+	var id = props.view.id.id;
 
 	var requiredTextFields = [{ fieldName: 'client_name', renderName: 'Full Name', description: 'What is your full name ?' }, { fieldName: 'email', renderName: 'Email', description: 'What is you email adress?' }];
 	var optionalTextFields = [{ fieldName: 'company_name', renderName: 'Company Name', description: 'What is your company name ?' }, {
@@ -374,30 +422,30 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 		null,
 		React.createElement(
 			'div',
-			{ 'class': 'strong-view strong-form ' + template + ' wpmtst-' + template },
+			{ className: 'strong-view strong-form strong-view-id-' + props.view.id + ' ' + template + ' wpmtst-' + template },
 			React.createElement(
 				'div',
 				{ id: 'wpmtst-form' },
 				React.createElement(
 					'div',
-					{ 'class': 'strong-form-inner' },
+					{ className: 'strong-form-inner' },
 					React.createElement(
 						'form',
 						{ id: 'wpmtst-submission-form' },
 						requiredTextFields.map(function (type, val) {
 							return [React.createElement(
 								'div',
-								{ 'class': 'form-field field-' + type.fieldName },
+								{ className: 'form-field field-' + type.fieldName },
 								React.createElement(
 									'label',
-									{ 'for': 'wpmtst_' + type.fieldName, 'class': 'field-' + type.fieldName },
+									{ 'for': 'wpmtst_' + type.fieldName, className: 'field-' + type.fieldName },
 									type.renderName
 								),
-								React.createElement('span', { 'class': 'required symbol' }),
+								React.createElement('span', { className: 'required symbol' }),
 								React.createElement('input', {
 									id: 'wpmtst_' + type.fieldName,
 									type: 'text',
-									'class': 'text',
+									className: 'text',
 									name: type.fieldName,
 									value: '',
 									placeholder: '',
@@ -406,7 +454,7 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 								}),
 								React.createElement(
 									'span',
-									{ 'class': 'after' },
+									{ className: 'after' },
 									type.description
 								)
 							)];
@@ -414,16 +462,16 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 						optionalTextFields.map(function (type, val) {
 							return [React.createElement(
 								'div',
-								{ 'class': 'form-field field-' + type.fieldName },
+								{ className: 'form-field field-' + type.fieldName },
 								React.createElement(
 									'label',
-									{ 'for': 'wpmtst_' + type.fieldName, 'class': 'field-' + type.fieldName },
+									{ 'for': 'wpmtst_' + type.fieldName, className: 'field-' + type.fieldName },
 									type.renderName
 								),
 								React.createElement('input', {
 									id: 'wpmtst_' + type.fieldName,
 									type: 'text',
-									'class': 'text',
+									className: 'text',
 									name: type.fieldName,
 									value: '',
 									placeholder: '',
@@ -432,71 +480,71 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 								}),
 								React.createElement(
 									'span',
-									{ 'class': 'after' },
+									{ className: 'after' },
 									type.description
 								)
 							)];
 						}),
 						React.createElement(
 							'div',
-							{ 'class': 'form-field field-post_content' },
+							{ className: 'form-field field-post_content' },
 							React.createElement(
 								'label',
-								{ 'for': 'wpmtst_post_content', 'class': 'field-post_content' },
+								{ 'for': 'wpmtst_post_content', className: 'field-post_content' },
 								'Testimonial'
 							),
-							React.createElement('span', { 'class': 'required symbol' }),
+							React.createElement('span', { className: 'required symbol' }),
 							React.createElement('textarea', {
 								id: 'wpmtst_post_content',
 								name: 'post_content',
-								'class': 'textarea',
+								className: 'textarea',
 								required: '',
 								placeholder: '',
 								tabindex: '0'
 							}),
 							React.createElement(
 								'span',
-								{ 'class': 'after' },
+								{ className: 'after' },
 								'What do you think about us?'
 							)
 						),
 						React.createElement(
 							'div',
-							{ 'class': 'form-field field-featured_image' },
+							{ className: 'form-field field-featured_image' },
 							React.createElement(
 								'label',
-								{ 'for': 'wpmtst_featured_image', 'class': 'field-featured_image' },
+								{ 'for': 'wpmtst_featured_image', className: 'field-featured_image' },
 								'Photo'
 							),
 							React.createElement(
 								'div',
-								{ 'class': 'field-wrap' },
+								{ className: 'field-wrap' },
 								React.createElement('input', { id: 'wpmtst_featured_image', type: 'file', name: 'featured_image', tabindex: '0' })
 							),
 							React.createElement(
 								'span',
-								{ 'class': 'after' },
+								{ className: 'after' },
 								'Would you like to include a photo?'
 							)
 						),
 						React.createElement(
 							'div',
-							{ 'class': 'form-field field-star_rating' },
+							{ className: 'form-field field-star_rating' },
 							React.createElement(
 								'label',
-								{ 'for': 'wpmtst_star_rating', 'class': 'field-star_rating' },
+								{ 'for': 'wpmtst_star_rating', className: 'field-star_rating' },
 								'Star rating'
 							),
 							React.createElement(
 								'div',
-								{ 'class': 'strong-rating-wrapper field-wrap in-form' },
+								{ className: 'strong-rating-wrapper field-wrap in-form' },
 								React.createElement(
 									'fieldset',
 									{
 										contenteditable: 'false',
 										id: 'wpmtst_star_rating',
 										name: 'star_rating',
-										'class': 'strong-rating',
+										className: 'strong-rating',
 										'data-field-type': 'rating',
 										tabindex: '0'
 									},
@@ -527,8 +575,24 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 							),
 							React.createElement(
 								'span',
-								{ 'class': 'after' },
+								{ className: 'after' },
 								'Would you like to include star rating?'
+							)
+						),
+						React.createElement(
+							'div',
+							{ className: 'form-field wpmtst-submit' },
+							React.createElement(
+								'label',
+								null,
+								React.createElement('input', {
+									type: 'submit',
+									id: 'wpmtst_submit_testimonial',
+									name: 'wpmtst_submit_testimonial',
+									value: 'Add Testimonial',
+									className: 'button',
+									tabindex: '0'
+								})
 							)
 						)
 					)
@@ -541,7 +605,7 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 exports.default = StrongTestimonialsViewForm;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
