@@ -3,10 +3,10 @@ import STViewTestimonial from './StrongTestimonialsViewTestimonial';
 const { Component, Fragment, useEffect } = wp.element;
 
 export const StrongTestimonialsViewDisplay = (props) => {
-	const { testimonials, view } = props;
+	const { testimonials, view, convertDateToUnix, sortTestimonialsByDate } = props;
 
 	const { data, id } = view;
-
+	console.log(data);
 	const getClassNamesByLayout = (layout, columns) => {
 		let classNames = `strong-content strong-${layout} columns-${columns}`;
 		if ('' == layout) {
@@ -29,7 +29,15 @@ export const StrongTestimonialsViewDisplay = (props) => {
 				{testimonials.length > 0 && (
 					<Fragment>
 						{testimonials.map((testimonial, index) => {
-							return [ <STViewTestimonial testimonial={testimonial} index={index} data={data} /> ];
+							return [
+								<STViewTestimonial
+									testimonial={testimonial}
+									index={index}
+									data={data}
+									convertDateToUnix={convertDateToUnix}
+									sortTestimonialsByDate={sortTestimonialsByDate}
+								/>
+							];
 						})}
 					</Fragment>
 				)}

@@ -17,14 +17,19 @@ const { compose } = wp.compose;
 export const StrongTestimonialViewEdit = (props) => {
 	const { attributes, setAttributes, testimonials } = props;
 	const { id, views, status, mode, view } = attributes;
-	console.log(view);
 	useEffect(() => {
 		setAttributes({ status: 'ready', views: st_views.views });
 
 		if (id != 0) {
 			onIdChange(id);
 		}
-	}, []);
+		if (testimonials != undefined && testimonials.length > 1 && props.attributes.sorted != true) {
+			testimonials.map((testimonial, index) => {
+				testimonial.unixDate = convertDateToUnix(testimonial.date);
+			});
+			sortTestimonialsByDate(testimonials, view.data.order);
+		}
+	});
 	const onIdChange = (id) => {
 		props.setAttributes({ status: 'ready', id: id });
 		getSelectedView(id);
@@ -47,6 +52,47 @@ export const StrongTestimonialViewEdit = (props) => {
 		});
 
 		return options;
+	};
+
+	const convertDateToUnix = (date) => {
+		let unixDate = new Date(date).getTime();
+		return unixDate;
+	};
+
+	const sortTestimonialsByDate = (testimonials, order) => {
+		if ('oldest' == order) {
+			testimonials.sort((a, b) => {
+				return a.unixDate - b.unixDate;
+			});
+		} else if ('menu_order' == order) {
+			testimonials.sort((a, b) => {
+				return a.menu_order - b.menu_order;
+			});
+		} else if ('random' == order) {
+			randomize(testimonials);
+		}
+
+		setAttributes({ sorted: true, testimonials: testimonials });
+	};
+
+	const randomize = (testimonials) => {
+		let currentIndex = testimonials.length,
+			temporaryValue,
+			randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = testimonials[currentIndex];
+			testimonials[currentIndex] = testimonials[randomIndex];
+			testimonials[randomIndex] = temporaryValue;
+		}
+
+		return testimonials;
 	};
 
 	const blockControls = (
@@ -124,7 +170,7 @@ export const StrongTestimonialViewEdit = (props) => {
 		];
 	}
 
-	if (id != 0 && testimonials.length > 0 ) {
+	if (id != 0 && testimonials.length > 0) {
 		if (view != undefined) {
 			if ('form' == view.data.mode) {
 				return [
@@ -138,7 +184,12 @@ export const StrongTestimonialViewEdit = (props) => {
 				return [
 					<Fragment>
 						<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
-						<STViewDisplay view={view} testimonials={testimonials} />
+						<STViewDisplay
+							view={view}
+							testimonials={testimonials}
+							convertDateToUnix={convertDateToUnix}
+							sortTestimonialsByDate={sortTestimonialsByDate}
+						/>
 					</Fragment>
 				];
 			}
