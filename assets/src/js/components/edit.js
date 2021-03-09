@@ -29,9 +29,10 @@ export const StrongTestimonialViewEdit = (props) => {
 			testimonials.map((testimonial, index) => {
 				testimonial.unixDate = convertDateToUnix(testimonial.date);
 			});
-			sortTestimonialsByDate(testimonials, view.data.order);
+			if (view != undefined) {
+				sortTestimonialsByDate(testimonials, view.data.order);
+			}
 		}
-
 	});
 	const onIdChange = (id) => {
 		props.setAttributes({ status: 'ready', id: id });
@@ -56,7 +57,6 @@ export const StrongTestimonialViewEdit = (props) => {
 
 		return options;
 	};
-
 
 	/**
 	Sorting helper functions
@@ -102,7 +102,6 @@ export const StrongTestimonialViewEdit = (props) => {
 		return testimonials;
 	};
 
-	
 	///////////
 
 	const blockControls = (
