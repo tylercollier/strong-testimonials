@@ -1,4 +1,4 @@
-const path                      = require('path');
+const path = require('path');
 //const ExtractTextPlugin       = require('extract-text-webpack-plugin');
 //const UglifyJSPlugin            = require('uglifyjs-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -9,9 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = {
 	entry: {
 		'admin-js': './assets/src/js/admin.js',
-		'admin': './assets/src/scss/admin.scss',
-		'blocks-js': './assets/src/js/blocks.js',
-		'blocks': './assets/src/scss/blocks.scss'
+		'blocks-js': './assets/src/js/blocks.js'
 	},
 	output: {
 		filename: 'js/[name].js',
@@ -21,41 +19,39 @@ const config = {
 		rules: [
 			{
 				test: /\.scss$/,
-		/* 		use: ExtractTextPlugin.extract({
+				/* 		use: ExtractTextPlugin.extract({
 					fallback: 'style-loader', */
-				  	use:[MiniCssExtractPlugin.loader, 'css-loader?url=false', 'postcss-loader', 'sass-loader' ]
+				use: [ MiniCssExtractPlugin.loader, 'css-loader?url=false', 'postcss-loader', 'sass-loader' ]
 				//}),
 			},
 			{
 				test: /\.js$/,
 				exclude: /(node_modules)/,
-				loader: 'babel-loader',
+				loader: 'babel-loader'
 			}
 		]
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			output: {
-			  filename: "/css/blocks.css"
-			}
+			filename: '/css/blocks.css'
 		}),
 		//new ExtractTextPlugin('/css/[name].css'),
 		new BrowserSyncPlugin({
 			proxy: 'localhost/',
-		    port: 3000,
-		    files: [ '**/*.php' ],
-		    ghostMode: {
-		        clicks: false,
-		        location: false,
-		        forms: false,
-		        scroll: false
-		    },
-		    injectChanges: true,
-		    logFileChanges: true,
-		    logLevel: 'debug',
-		    logPrefix: 'wepback',
-		    notify: false,
-		    reloadDelay: 0
+			port: 3000,
+			files: [ '**/*.php' ],
+			ghostMode: {
+				clicks: false,
+				location: false,
+				forms: false,
+				scroll: false
+			},
+			injectChanges: true,
+			logFileChanges: true,
+			logLevel: 'debug',
+			logPrefix: 'wepback',
+			notify: false,
+			reloadDelay: 0
 		})
 	]
 };

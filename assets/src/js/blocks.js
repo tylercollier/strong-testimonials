@@ -1,4 +1,5 @@
 import Edit from './components/edit';
+import style from '../scss/blocks.scss';
 
 /**
  * Import wp deps
@@ -35,11 +36,7 @@ class StrongTestimonialView {
 				align: true,
 				customClassName: false
 			},
-			// getEditWrapperProps() {
-			// 	return {
-			// 		'data-align': 'center'
-			// 	};
-			// },
+			
 			attributes: this.blockAttributes,
 			edit: Edit,
 			save: () => {
