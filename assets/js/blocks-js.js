@@ -80,17 +80,21 @@ exports.StrongTestimonialViewEdit = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _inspector = __webpack_require__(7);
+var _inspector = __webpack_require__(8);
 
 var _inspector2 = _interopRequireDefault(_inspector);
 
-var _StrongTestimonialsViewForm = __webpack_require__(6);
+var _StrongTestimonialsViewForm = __webpack_require__(7);
 
 var _StrongTestimonialsViewForm2 = _interopRequireDefault(_StrongTestimonialsViewForm);
 
 var _StrongTestimonialsStyle = __webpack_require__(5);
 
 var _StrongTestimonialsStyle2 = _interopRequireDefault(_StrongTestimonialsStyle);
+
+var _StrongTestimonialsViewDisplay = __webpack_require__(6);
+
+var _StrongTestimonialsViewDisplay2 = _interopRequireDefault(_StrongTestimonialsViewDisplay);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -118,9 +122,10 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 	var id = attributes.id,
 	    views = attributes.views,
 	    status = attributes.status,
-	    mode = attributes.mode;
+	    mode = attributes.mode,
+	    view = attributes.view;
 
-
+	console.log(view);
 	useEffect(function () {
 		setAttributes({ status: 'ready', views: st_views.views });
 
@@ -130,6 +135,7 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 	}, []);
 	var _onIdChange = function _onIdChange(id) {
 		props.setAttributes({ status: 'ready', id: id });
+		getSelectedView(id);
 	};
 
 	// Get only the required view settings to pass in the appropiate
@@ -138,6 +144,8 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 		var view = st_views.views.filter(function (view) {
 			return view.id == id;
 		});
+
+		setAttributes({ view: view[0] });
 		return view[0];
 	};
 
@@ -182,7 +190,7 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 	}
 
 	if (id == 0) {
-		React.createElement(
+		return [React.createElement(
 			Fragment,
 			null,
 			React.createElement(_inspector2.default, _extends({ onIdChange: function onIdChange(id) {
@@ -238,17 +246,35 @@ var StrongTestimonialViewEdit = exports.StrongTestimonialViewEdit = function Str
 					)
 				)
 			)
-		);
-	}
-
-	if (id != 0) {
-		return [React.createElement(
-			Fragment,
-			null,
-			React.createElement(_StrongTestimonialsStyle2.default, { view: getSelectedView(id) }),
-			React.createElement(_StrongTestimonialsViewForm2.default, { view: getSelectedView(id) })
 		)];
 	}
+
+	if (id != 0 && testimonials.length > 0) {
+		if (view != undefined) {
+			if ('form' == view.data.mode) {
+				return [React.createElement(
+					Fragment,
+					null,
+					React.createElement(_inspector2.default, _extends({ onIdChange: function onIdChange(id) {
+							return _onIdChange(id);
+						}, selectOptions: selectOptions() }, props)),
+					React.createElement(_StrongTestimonialsViewForm2.default, { view: view }),
+					React.createElement(_StrongTestimonialsViewForm2.default, { view: view })
+				)];
+			} else if ('display' == view.data.mode) {
+				return [React.createElement(
+					Fragment,
+					null,
+					React.createElement(_inspector2.default, _extends({ onIdChange: function onIdChange(id) {
+							return _onIdChange(id);
+						}, selectOptions: selectOptions() }, props)),
+					React.createElement(_StrongTestimonialsViewDisplay2.default, { view: view, testimonials: testimonials })
+				)];
+			}
+		}
+		return null;
+	}
+	return null;
 };
 
 var applyWithSelect = withSelect(function (select, props) {
@@ -297,49 +323,52 @@ var __ = wp.i18n.__;
 var registerBlockType = wp.blocks.registerBlockType;
 
 var StrongTestimonialView = function () {
-    function StrongTestimonialView() {
-        _classCallCheck(this, StrongTestimonialView);
+	function StrongTestimonialView() {
+		_classCallCheck(this, StrongTestimonialView);
 
-        this.registerBlock();
-    }
+		this.registerBlock();
+	}
 
-    _createClass(StrongTestimonialView, [{
-        key: 'registerBlock',
-        value: function registerBlock() {
+	_createClass(StrongTestimonialView, [{
+		key: 'registerBlock',
+		value: function registerBlock() {
+			this.blockName = 'strongtestimonials/view';
 
-            this.blockName = 'strongtestimonials/view';
+			this.blockAttributes = {
+				id: {
+					type: 'number',
+					default: 0
+				},
+				mode: {
+					type: 'string',
+					default: 'display'
+				}
+			};
 
-            this.blockAttributes = {
-                id: {
-                    type: 'number',
-                    default: 0
-                },
-                mode: {
-                    type: 'string',
-                    default: 'display'
-                }
-            };
+			registerBlockType(this.blockName, {
+				title: 'Strong Testimonial View',
+				description: __('Render ST View', 'strong-testimonials'),
+				icon: 'editor-quote',
+				category: 'common',
+				supports: {
+					align: true,
+					customClassName: false
+				},
+				// getEditWrapperProps() {
+				// 	return {
+				// 		'data-align': 'center'
+				// 	};
+				// },
+				attributes: this.blockAttributes,
+				edit: _edit2.default,
+				save: function save() {
+					return null;
+				}
+			});
+		}
+	}]);
 
-            registerBlockType(this.blockName, {
-                title: 'Strong Testimonial View',
-                description: __('Render ST View', 'strong-testimonials'),
-                icon: 'editor-quote',
-                category: 'common',
-                supports: {
-                    html: false,
-                    customClassName: false
-                },
-
-                attributes: this.blockAttributes,
-                edit: _edit2.default,
-                save: function save() {
-                    return null;
-                }
-            });
-        }
-    }]);
-
-    return StrongTestimonialView;
+	return StrongTestimonialView;
 }();
 
 var strongTestimonialsView = new StrongTestimonialView();
@@ -384,6 +413,70 @@ exports.default = StrongTestimonialsStyle;
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.StrongTestimonialsViewDisplay = undefined;
+
+var _StrongTestimonialsViewTestimonial = __webpack_require__(11);
+
+var _StrongTestimonialsViewTestimonial2 = _interopRequireDefault(_StrongTestimonialsViewTestimonial);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment,
+    useEffect = _wp$element.useEffect;
+var StrongTestimonialsViewDisplay = exports.StrongTestimonialsViewDisplay = function StrongTestimonialsViewDisplay(props) {
+	var testimonials = props.testimonials,
+	    view = props.view;
+	var data = view.data,
+	    id = view.id;
+
+
+	var getClassNamesByLayout = function getClassNamesByLayout(layout, columns) {
+		var classNames = 'strong-content strong-' + layout + ' columns-' + columns;
+		if ('' == layout) {
+			classNames = 'strong-content strong-normal columns-1';
+		} else if ('masonry' == layout) {
+			classNames += ' masonry';
+		}
+		return classNames;
+	};
+
+	return [React.createElement(
+		'div',
+		{ className: 'strong-view strong-view-id-' + id + ' ' + data.template + ' wpmtst-' + data.template },
+		React.createElement(
+			'div',
+			{ className: getClassNamesByLayout(data.layout, data.column_count) },
+			'masonry' == data.layout && React.createElement(
+				Fragment,
+				null,
+				React.createElement('div', { className: 'grid-sizer masonry-brick' }),
+				React.createElement('div', { className: 'gutter-sizer masonry-brick' })
+			),
+			testimonials.length > 0 && React.createElement(
+				Fragment,
+				null,
+				testimonials.map(function (testimonial, index) {
+					return [React.createElement(_StrongTestimonialsViewTestimonial2.default, { testimonial: testimonial, index: index, data: data })];
+				})
+			)
+		)
+	)];
+};
+
+exports.default = StrongTestimonialsViewDisplay;
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -605,7 +698,7 @@ var StrongTestimonialsViewForm = exports.StrongTestimonialsViewForm = function S
 exports.default = StrongTestimonialsViewForm;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -721,6 +814,87 @@ var Inspector = function (_Component) {
 }(Component);
 
 exports.default = Inspector;
+
+/***/ }),
+/* 9 */,
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    Fragment = _wp$element.Fragment,
+    useEffect = _wp$element.useEffect;
+var StrongTestimonialsViewTestimonial = exports.StrongTestimonialsViewTestimonial = function StrongTestimonialsViewTestimonial(props) {
+	var testimonial = props.testimonial,
+	    index = props.index,
+	    data = props.data;
+	var id = testimonial.id,
+	    title = testimonial.title,
+	    content = testimonial.content;
+	var client_section = data.client_section;
+
+
+	return [React.createElement(
+		"div",
+		{ className: "wpmtst-testimonial testimonial post-" + id },
+		React.createElement(
+			"div",
+			{ className: "wpmtst-testimonial-inner testimonial-inner" },
+			React.createElement(
+				"div",
+				{ className: "wpmtst-testimonial-content testimonial-content" },
+				React.createElement(
+					"h3",
+					{ "class": "wpmtst-testimonial-heading testimonial-heading" },
+					title.rendered
+				),
+				React.createElement(
+					"p",
+					null,
+					content.raw
+				)
+			),
+			client_section.length > 0 && React.createElement(
+				Fragment,
+				null,
+				client_section.map(function (section, index) {
+					switch (section.type) {
+						case 'text':
+							return React.createElement(
+								"div",
+								{ "class": "wpmtst-testimonial-field testimonial-field " + section.class },
+								testimonial.meta[section.field]
+							);
+							break;
+						case 'link':
+							return React.createElement(
+								"div",
+								{ "class": "wpmtst-testimonial-field testimonial-field " + section.class },
+								React.createElement(
+									"a",
+									{
+										href: "" + testimonial.meta[section.url],
+										target: "_blank",
+										rel: "nofollow  "
+									},
+									testimonial.meta[section.field]
+								)
+							);
+					}
+				})
+			)
+		)
+	)];
+};
+
+exports.default = StrongTestimonialsViewTestimonial;
 
 /***/ })
 /******/ ]);

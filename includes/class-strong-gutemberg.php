@@ -39,11 +39,7 @@ class Strong_Gutemberg {
     }
 
     public function render_view( $attributes ) {
-        $view_array       = wpmtst_get_view( $attributes['id'] );
-        $view             = unserialize( $view_array['value'] );
-        
-        wp_enqueue_style($view['template']);
-        
+
         if( 0 == count( $attributes ) ) {
             return;
         }
@@ -51,6 +47,17 @@ class Strong_Gutemberg {
         if( '0' == $attributes['id'] ) {
             return;
         }
+
+        $view_array       = wpmtst_get_view( $attributes['id'] );
+        $view             = unserialize( $view_array['value'] );
+        
+        wp_enqueue_style($view['template']);
+        if( 'columns' == $view['layout']) {
+            wp_enqueue_style('column-style', WPMTST_PUBLIC_URL . 'css/columns.css');
+        } else if ( 'grid' == $view['layout'] ) {
+            wp_enqueue_style('grid-style', WPMTST_PUBLIC_URL . 'css/grid.css');
+        }
+        
 
         return "[testimonial_view id={$attributes['id']}]";
     }

@@ -1,9 +1,10 @@
 const path                      = require('path');
 //const ExtractTextPlugin       = require('extract-text-webpack-plugin');
 //const UglifyJSPlugin            = require('uglifyjs-webpack-plugin');
-const OptimizeCssAssetsPlugin   = require('optimize-css-assets-webpack-plugin');
-const BrowserSyncPlugin         = require('browser-sync-webpack-plugin');
-const CssEntryPlugin            = require('css-entry-webpack-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const CssEntryPlugin = require('css-entry-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config = {
 	entry: {
@@ -22,7 +23,7 @@ const config = {
 				test: /\.scss$/,
 		/* 		use: ExtractTextPlugin.extract({
 					fallback: 'style-loader', */
-				  	use: ['css-loader?url=false', 'postcss-loader', 'sass-loader']
+				  	use:[MiniCssExtractPlugin.loader, 'css-loader?url=false', 'postcss-loader', 'sass-loader' ]
 				//}),
 			},
 			{
@@ -33,9 +34,9 @@ const config = {
 		]
 	},
 	plugins: [
-		new CssEntryPlugin({
+		new MiniCssExtractPlugin({
 			output: {
-			  filename: "/css/[name].css"
+			  filename: "/css/blocks.css"
 			}
 		}),
 		//new ExtractTextPlugin('/css/[name].css'),

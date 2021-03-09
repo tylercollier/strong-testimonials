@@ -1,6 +1,7 @@
 import Inspector from './inspector';
-import StrongTestimonialsViewForm from './StrongTestimonialsViewForm';
-import StrongTestimonialsStyle from './StrongTestimonialsStyle';
+import STViewForm from './StrongTestimonialsViewForm';
+import STStyle from './StrongTestimonialsStyle';
+import STViewDisplay from './StrongTestimonialsViewDisplay';
 
 /**
  * Wordpress deps
@@ -15,8 +16,8 @@ const { compose } = wp.compose;
 
 export const StrongTestimonialViewEdit = (props) => {
 	const { attributes, setAttributes, testimonials } = props;
-	const { id, views, status, mode } = attributes;
-
+	const { id, views, status, mode, view } = attributes;
+	console.log(view);
 	useEffect(() => {
 		setAttributes({ status: 'ready', views: st_views.views });
 
@@ -26,12 +27,15 @@ export const StrongTestimonialViewEdit = (props) => {
 	}, []);
 	const onIdChange = (id) => {
 		props.setAttributes({ status: 'ready', id: id });
+		getSelectedView(id);
 	};
 
 	// Get only the required view settings to pass in the appropiate
 	// element
 	const getSelectedView = (id) => {
 		let view = st_views.views.filter((view) => view.id == id);
+
+		setAttributes({ view: view[0] });
 		return view[0];
 	};
 
@@ -68,64 +72,80 @@ export const StrongTestimonialViewEdit = (props) => {
 	}
 
 	if (id == 0) {
-		<Fragment>
-			<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
-			<div className="st-block-preview">
-				<div class="st-block-preview__content">
-					<div className="st-block-preview__logo" />
-					{st_views.views.length === 0 && (
-						<Fragment>
-							<h6>{__("You don't seem to have any views.")}</h6>
-							<Button
-								href={
-									st_views.adminURL +
-									'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=add'
-								}
-								target="_blank"
-								isDefault
-							>
-								{__('Add New View')}
-							</Button>
-						</Fragment>
-					)}
-					{st_views.views.length > 0 && (
-						<Fragment>
-							<SelectControl
-								label="Select a view:"
-								className="st-view-select"
-								key={id}
-								value={id}
-								options={selectOptions()}
-								onChange={(value) => onIdChange(parseInt(value))}
-							/>
-							{id != 0 && (
-								<Button
-									target="_blank"
-									href={
-										st_views.adminURL +
-										'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=edit&id=' +
-										id
-									}
-									isSecondary
-								>
-									{__('Edit Settings')}
-								</Button>
-							)}
-						</Fragment>
-					)}
-				</div>
-			</div>
-		</Fragment>;
-	}
-
-	if (id != 0) {
 		return [
 			<Fragment>
-				<StrongTestimonialsStyle view={getSelectedView(id)} />
-				<StrongTestimonialsViewForm view={getSelectedView(id)} />
+				<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
+				<div className="st-block-preview">
+					<div class="st-block-preview__content">
+						<div className="st-block-preview__logo" />
+						{st_views.views.length === 0 && (
+							<Fragment>
+								<h6>{__("You don't seem to have any views.")}</h6>
+								<Button
+									href={
+										st_views.adminURL +
+										'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=add'
+									}
+									target="_blank"
+									isDefault
+								>
+									{__('Add New View')}
+								</Button>
+							</Fragment>
+						)}
+						{st_views.views.length > 0 && (
+							<Fragment>
+								<SelectControl
+									label="Select a view:"
+									className="st-view-select"
+									key={id}
+									value={id}
+									options={selectOptions()}
+									onChange={(value) => onIdChange(parseInt(value))}
+								/>
+								{id != 0 && (
+									<Button
+										target="_blank"
+										href={
+											st_views.adminURL +
+											'edit.php?post_type=wpm-testimonial&page=testimonial-views&action=edit&id=' +
+											id
+										}
+										isSecondary
+									>
+										{__('Edit Settings')}
+									</Button>
+								)}
+							</Fragment>
+						)}
+					</div>
+				</div>
 			</Fragment>
 		];
 	}
+
+	if (id != 0 && testimonials.length > 0 ) {
+		if (view != undefined) {
+			if ('form' == view.data.mode) {
+				return [
+					<Fragment>
+						<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
+						<STViewForm view={view} />
+						<STViewForm view={view} />
+					</Fragment>
+				];
+			} else if ('display' == view.data.mode) {
+				return [
+					<Fragment>
+						<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
+						<STViewDisplay view={view} testimonials={testimonials} />
+					</Fragment>
+				];
+			}
+		}
+		return null;
+	}
+	return null;
 };
 
 const applyWithSelect = withSelect((select, props) => {
