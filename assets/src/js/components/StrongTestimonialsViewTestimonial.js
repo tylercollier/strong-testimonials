@@ -8,6 +8,24 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 
 	const stars = [ 1, 2, 3, 4, 5 ];
 
+	const initPager = (data) => {
+		let pagers = jQuery('.strong-pager[data-state="idle"]');
+
+		if (pagers.length) {
+			pagers.each(function() {
+				jQuery(this).strongPager(data);
+			});
+		}
+	};
+	useEffect(() => {
+		let obj = {
+			pageSize: data.pagination_settings.per_page,
+			pagerLocation: data.pagination_settings.nav,
+			div: '.strong-content'
+		};
+		initPager(obj);
+	});
+
 	const generateHeading = (testimonial, titleLink) => {
 		if ('none' == titleLink) {
 			return <h3 class="wpmtst-testimonial-heading testimonial-heading">{title.rendered}</h3>;

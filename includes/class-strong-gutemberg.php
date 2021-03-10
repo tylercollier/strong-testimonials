@@ -58,6 +58,14 @@ class Strong_Gutemberg {
         } else if ( 'grid' == $view['layout'] ) {
             wp_enqueue_style('grid-style', WPMTST_PUBLIC_URL . 'css/grid.css');
         }
+
+        if( $view['pagination'] != 0 ) {
+            wp_register_script( 'wpmtst-pager',
+            WPMTST_PUBLIC_URL . "js/lib/strongpager/jquery-strongpager.js",
+            array( 'jquery', 'imagesloaded' ),
+            false,
+            true );
+        }
         
 
         return "[testimonial_view id={$attributes['id']}]";

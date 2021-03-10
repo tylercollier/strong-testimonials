@@ -18,7 +18,7 @@
   };
 
   $.fn.strongPager = function (options) {
-
+    console.log(options);
     if (this.length === 0) {
       return this;
     }
@@ -41,7 +41,7 @@
 
       // Merge user options with the defaults
       pager.settings = $.extend({}, defaults, config, options);
-
+      console.log(pager.settings);
       pager.div = el.find(pager.settings.div);
       pager.pageCounter = 0;
       pager.scrollto = 0;

@@ -8,13 +8,26 @@ export const StrongTestimonialsViewDisplay = (props) => {
 	const { data, id } = view;
 
 	// Helper function to generate class names
-	const getClassNamesByLayout = (layout, columns) => {
-		let classNames = `strong-content strong-${layout} columns-${columns}`;
-		if ('' == layout) {
+	const getClassNamesByLayout = (data, columns) => {
+		let classNames = `strong-content strong-${data.layout} columns-${columns}`;
+		if ('' == data.layout) {
 			classNames = 'strong-content strong-normal columns-1';
-		} else if ('masonry' == layout) {
+		} else if ('masonry' == data.layout) {
 			classNames += ' masonry';
 		}
+		if (data.pagination == 1 && data.pagination_settings.type == 'simple') {
+			classNames += ' strong-paginated';
+		}
+		return classNames;
+	};
+
+	const generateMainContainerClasses = (data) => {
+		let classNames = `strong-view strong-view-id-${id} ${data.template} wpmtst-${data.template}`;
+
+		if (data.pagination == 1 && data.pagination_settings.type == 'simple') {
+			classNames += ' strong-pager';
+		}
+
 		return classNames;
 	};
 
@@ -37,8 +50,8 @@ export const StrongTestimonialsViewDisplay = (props) => {
 	};
 
 	return [
-		<div className={`strong-view strong-view-id-${id} ${data.template} wpmtst-${data.template}`}>
-			<div className={getClassNamesByLayout(data.layout, data.column_count)}>
+		<div className={generateMainContainerClasses(data)} data-count={testimonials.length} data-state="idle">
+			<div className={getClassNamesByLayout(data, data.column_count)}>
 				{'masonry' == data.layout && (
 					<Fragment>
 						<div className="grid-sizer masonry-brick" />
