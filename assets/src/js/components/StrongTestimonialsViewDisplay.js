@@ -7,7 +7,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 
 	const { data, id } = view;
 
-    // Helper function to generate class names 
+	// Helper function to generate class names
 	const getClassNamesByLayout = (layout, columns) => {
 		let classNames = `strong-content strong-${layout} columns-${columns}`;
 		if ('' == layout) {
@@ -16,6 +16,24 @@ export const StrongTestimonialsViewDisplay = (props) => {
 			classNames += ' masonry';
 		}
 		return classNames;
+	};
+
+	const generateReadMoreButton = (data) => {
+		let url = st_views.adminURL.split('/');
+		url = `${url[0]}${url[2]}/?p=${data.more_page_id}`;
+		if ('wpmtst_view_footer' == data.more_page_hook) {
+			return (
+				<div className="readmore-page">
+					<a href={url}>{data.more_page_text}</a>
+				</div>
+			);
+		} else if ('wpmtst_after_testimonial' == data.more_page_hook) {
+			return (
+				<div className="readmore">
+					<a href={url}>{data.more_page_text}</a>
+				</div>
+			);
+		}
 	};
 
 	return [
@@ -39,6 +57,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 											data={data}
 											convertDateToUnix={convertDateToUnix}
 											sortTestimonialsByDate={sortTestimonialsByDate}
+											generateReadMoreButton={generateReadMoreButton}
 										/>
 									];
 								}
@@ -50,6 +69,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 										data={data}
 										convertDateToUnix={convertDateToUnix}
 										sortTestimonialsByDate={sortTestimonialsByDate}
+										generateReadMoreButton={generateReadMoreButton}
 									/>
 								];
 							}
@@ -57,6 +77,7 @@ export const StrongTestimonialsViewDisplay = (props) => {
 					</Fragment>
 				)}
 			</div>
+			{1 == data.more_page && <Fragment>{generateReadMoreButton(data)}</Fragment>}
 		</div>
 	];
 };

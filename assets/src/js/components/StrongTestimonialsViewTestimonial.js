@@ -1,7 +1,7 @@
 const { Component, Fragment, useEffect } = wp.element;
 
 export const StrongTestimonialsViewTestimonial = (props) => {
-	const { testimonial, index, data } = props;
+	const { testimonial, index, data, generateReadMoreButton } = props;
 	const { id, title, content } = testimonial;
 	const { meta } = testimonial.meta;
 	const { client_section } = data;
@@ -63,6 +63,9 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		}
 	};
 
+	/**
+	Helper function to convert text size into numeric form
+	 */
 	const convertSizeToNumbers = (size) => {
 		switch (size) {
 			case 'widget-thumbnail':
@@ -147,6 +150,10 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 							}
 						})}
 					</Fragment>
+				)}
+				{1 == data.more_page &&
+				'wpmtst_after_testimonial' == data.more_page_hook && (
+					<Fragment>{generateReadMoreButton(data)}</Fragment>
 				)}
 			</div>
 		</div>
