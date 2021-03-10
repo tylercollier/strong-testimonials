@@ -18,12 +18,14 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		}
 	};
 	useEffect(() => {
-		let obj = {
-			pageSize: data.pagination_settings.per_page,
-			pagerLocation: data.pagination_settings.nav,
-			div: '.strong-content'
-		};
-		initPager(obj);
+		if (1 == data.pagination) {
+			let obj = {
+				pageSize: data.pagination_settings.per_page,
+				pagerLocation: data.pagination_settings.nav,
+				div: '.strong-content'
+			};
+			initPager(obj);
+		}
 	});
 
 	const generateHeading = (testimonial, titleLink) => {
