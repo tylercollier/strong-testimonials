@@ -34,6 +34,7 @@ class Strong_Gutemberg {
                 'adminURL'     => admin_url(),
                 'ajaxURL'      => admin_url( 'admin-ajax.php' ),
                 'views'        => wpmtst_unserialize_views( wpmtst_get_views() ),
+                'gravatar'     => wpmtst_gravatar_url()
             )
         );
     }

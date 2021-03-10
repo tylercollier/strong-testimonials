@@ -267,3 +267,14 @@ function wpmtst_thumbnail_img_platform_woocommerce( $img, $post_id, $size ) {
 	return sprintf( '<img src="%s" %s %s/>', get_avatar_url( $email ), $width ? "width='${width}'" : '', $height ? "height='${height}'" : '' );
 }
 add_filter( 'wpmtst_thumbnail_img_platform_woocommerce', 'wpmtst_thumbnail_img_platform_woocommerce', 10, 3 );
+
+function wpmtst_gravatar_url() {
+	$user_email = get_the_author_meta( 'user_email' );
+
+	$url = 'http://gravatar.com/avatar/' . md5( $user_email );
+	$url = add_query_arg( array(
+    's' => 1024,
+    'd' => 'mm',
+	), $url );
+	return esc_url_raw( $url );
+}

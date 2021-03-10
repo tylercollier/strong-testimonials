@@ -3,9 +3,82 @@ const { Component, Fragment, useEffect } = wp.element;
 export const StrongTestimonialsViewTestimonial = (props) => {
 	const { testimonial, index, data } = props;
 	const { id, title, content } = testimonial;
+	const { meta } = testimonial.meta;
 	const { client_section } = data;
 
 	const stars = [ 1, 2, 3, 4, 5 ];
+
+	const generateHeading = (testimonial, titleLink) => {
+		if ('none' == titleLink) {
+			return <h3 class="wpmtst-testimonial-heading testimonial-heading">{title.rendered}</h3>;
+		} else if ('wpmtst_testimonial' == titleLink) {
+			return (
+				<h3 class="wpmtst-testimonial-heading testimonial-heading">
+					<a href={testimonial.link} rel="bookmark">
+						{title.rendered}
+					</a>
+				</h3>
+			);
+		} else {
+			return (
+				<h3 class="wpmtst-testimonial-heading testimonial-heading">
+					<a href={testimonial.meta.company_website[0]} rel="bookmark">
+						{title.rendered}
+					</a>
+				</h3>
+			);
+		}
+	};
+
+	const generateFeaturedImage = (featuredImage, gravatar, data) => {
+		let size = convertSizeToNumbers(data.thumbnail_size);
+		if (false == featuredImage) {
+			return (
+				<div class="wpmtst-testimonial-image testimonial-image">
+					<img
+						alt=""
+						src={gravatar}
+						srcset={gravatar}
+						class={`avatar avatar-${size} photo`}
+						height={size}
+						width={size}
+						loading="lazy"
+					/>
+				</div>
+			);
+		} else {
+			return (
+				<div class="wpmtst-testimonial-image testimonial-image">
+					<img
+						width={size}
+						height={size}
+						src={featuredImage}
+						class={`attachment-${data.thumbnail_size} size-${data.thumbnail_size} wp-post-image`}
+						alt=""
+						srcset={featuredImage}
+						sizes={`(max-width: ${size}px) 100vw, ${size}px`}
+					/>
+				</div>
+			);
+		}
+	};
+
+	const convertSizeToNumbers = (size) => {
+		switch (size) {
+			case 'widget-thumbnail':
+				return '75';
+				break;
+			case 'thumbnail':
+				return '150';
+				break;
+			case 'medium':
+				return '300';
+				break;
+			case 'large':
+				return '1024';
+				break;
+		}
+	};
 
 	/**
 	Helper function to convert wordpress date into readable format
@@ -23,9 +96,10 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		<div className={`wpmtst-testimonial testimonial post-${id}`}>
 			<div className="wpmtst-testimonial-inner testimonial-inner">
 				<div className="wpmtst-testimonial-content testimonial-content">
-					<h3 class="wpmtst-testimonial-heading testimonial-heading">{title.rendered}</h3>
+					{data.title == 1 && generateHeading(testimonial, data.title_link)}
 					<p>{content.raw.replace(/(<([^>]+)>)/gi, '')}</p>
 				</div>
+				{data.thumbnail == 1 && generateFeaturedImage(testimonial.meta.featured_image, st_views.gravatar, data)}
 				{client_section.length > 0 && (
 					<Fragment>
 						{client_section.map((section, index) => {
@@ -33,19 +107,15 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 								case 'text':
 									return (
 										<div class={`wpmtst-testimonial-field testimonial-field ${section.class}`}>
-											{testimonial.meta[section.field]}
+											{meta[section.field]}
 										</div>
 									);
 									break;
 								case 'link':
 									return (
 										<div class={`wpmtst-testimonial-field testimonial-field ${section.class}`}>
-											<a
-												href={`${testimonial.meta[section.url]}`}
-												target="_blank"
-												rel="nofollow  "
-											>
-												{testimonial.meta[section.field]}
+											<a href={`${meta[section.url]}`} target="_blank" rel="nofollow  ">
+												{meta[section.field]}
 											</a>
 										</div>
 									);
@@ -57,7 +127,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 												<span className="strong-rating">
 													<span className="star" style={{ display: 'none' }} />
 													{stars.map((star, index) => {
-														if (star == testimonial.meta.star_rating) {
+														if (star == meta.star_rating) {
 															return <span className="star current" />;
 														}
 														return <span className="star" />;

@@ -17,6 +17,7 @@ const { compose } = wp.compose;
 export const StrongTestimonialViewEdit = (props) => {
 	const { attributes, setAttributes, testimonials } = props;
 	const { id, views, status, mode, view } = attributes;
+
 	useEffect(() => {
 		setAttributes({ status: 'ready', views: st_views.views });
 
