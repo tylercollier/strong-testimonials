@@ -33,10 +33,9 @@ class StrongTestimonialView {
 			icon: 'editor-quote',
 			category: 'common',
 			supports: {
-				align: true,
 				customClassName: false
 			},
-			
+
 			attributes: this.blockAttributes,
 			edit: Edit,
 			save: () => {

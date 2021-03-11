@@ -39,7 +39,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 			initPager(obj);
 		}
 		if ('masonry' == data.layout) {
-			setTimeout(() => initMasonry(), 6000);
+			initMasonry();
 		}
 	});
 
