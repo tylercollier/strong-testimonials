@@ -18,17 +18,17 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		}
 	};
 
-	// const initMasonry = () => {
-	// 	let grids = jQuery('.strong-view[data-state="idle"] .strong-masonry');
-	// 	grids.prepend('<div class="grid-sizer"></div><div class="gutter-sizer"></div>');
-	// 	grids.masonry({
-	// 		columnWidth: '.grid-sizer',
-	// 		gutter: '.gutter-sizer',
-	// 		itemSelector: '.wpmtst-testimonial',
-	// 		percentPosition: true
-	// 	});
-	// 	grids.closest('.strong-view').attr('data-state', 'init');
-	// };
+	const initMasonry = () => {
+		let grids = jQuery('.strong-view[data-state="idle"] .strong-masonry');
+		grids.prepend('<div class="grid-sizer"></div><div class="gutter-sizer"></div>');
+		grids.masonry({
+			columnWidth: '.grid-sizer',
+			gutter: '.gutter-sizer',
+			itemSelector: '.wpmtst-testimonial',
+			percentPosition: true
+		});
+		grids.closest('.strong-view').attr('data-state', 'init');
+	};
 	useEffect(() => {
 		if (1 == data.pagination) {
 			let obj = {
@@ -39,7 +39,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 			initPager(obj);
 		}
 		if ('masonry' == data.layout) {
-			// setTimeout(() => initMasonry(), 6000);
+			setTimeout(() => initMasonry(), 6000);
 		}
 	});
 
@@ -160,19 +160,23 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 									break;
 								case 'rating':
 									return (
-										<div className="wpmtst-testimonial-field testimonial-field ">
-											<span className="strong-rating-wrapper in-view">
-												<span className="strong-rating">
-													<span className="star" style={{ display: 'none' }} />
-													{stars.map((star, index) => {
-														if (star == meta.star_rating) {
-															return <span className="star current" />;
-														}
-														return <span className="star" />;
-													})}
-												</span>
-											</span>
-										</div>
+										<Fragment>
+											{undefined != meta.star_rating && (
+												<div className="wpmtst-testimonial-field testimonial-field ">
+													<span className="strong-rating-wrapper in-view">
+														<span className="strong-rating">
+															<span className="star" style={{ display: 'none' }} />
+															{stars.map((star, index) => {
+																if (star == meta.star_rating) {
+																	return <span className="star current" />;
+																}
+																return <span className="star" />;
+															})}
+														</span>
+													</span>
+												</div>
+											)}
+										</Fragment>
 									);
 									break;
 								case 'date':

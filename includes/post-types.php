@@ -41,7 +41,7 @@ add_action( 'init', 'wpmtst_register_cpt', 12 );
 function register_post_meta_rest() {
 	register_rest_field( 'wpm-testimonial', 'meta', array(
 		'get_callback' => function( $post_arr ) {
-			return array( 'meta' => get_post_meta( $post_arr['id'], false ), 'featured_image' => wp_get_attachment_url(get_post_thumbnail_id($id)) );
+			return array( 'meta' => get_post_meta( $post_arr['id'], false ), 'featured_image' => wp_get_attachment_url(get_post_thumbnail_id($post_arr['id'])) );
 		},
 	) );
 }
