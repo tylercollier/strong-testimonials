@@ -52,12 +52,12 @@ export const StrongTestimonialsViewDisplay = (props) => {
 	return [
 		<div className={generateMainContainerClasses(data)} data-count={testimonials.length} data-state="idle">
 			<div className={getClassNamesByLayout(data, data.column_count)}>
-				{'masonry' == data.layout && (
+				{/* {'masonry' == data.layout && (
 					<Fragment>
 						<div className="grid-sizer masonry-brick" />
 						<div className="gutter-sizer masonry-brick" />
 					</Fragment>
-				)}
+				)} */}
 				{testimonials.length > 0 && (
 					<Fragment>
 						{testimonials.map((testimonial, index) => {

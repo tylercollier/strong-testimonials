@@ -57,6 +57,8 @@ class Strong_Gutemberg {
             wp_enqueue_style('column-style', WPMTST_PUBLIC_URL . 'css/columns.css');
         } else if ( 'grid' == $view['layout'] ) {
             wp_enqueue_style('grid-style', WPMTST_PUBLIC_URL . 'css/grid.css');
+        } else if( 'masonry' == $view['layout']) {
+            wp_enqueue_style('grid-style', WPMTST_PUBLIC_URL . 'css/masonry.css');
         }
 
         if( $view['pagination'] != 0 ) {
@@ -66,6 +68,8 @@ class Strong_Gutemberg {
             false,
             true );
         }
+
+        
         
 
         return "[testimonial_view id={$attributes['id']}]";
