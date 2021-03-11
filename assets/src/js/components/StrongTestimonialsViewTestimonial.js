@@ -29,6 +29,72 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		});
 		grids.closest('.strong-view').attr('data-state', 'init');
 	};
+
+	const sliceTestimonialContentByWord = (length, content, showMore) => {
+		let excerpt = '';
+		let remaining = '';
+
+		if (content == undefined) return;
+		try {
+			content = content.split(' ');
+			//Before we proceed check if we need to create the excerpt
+			if (length > content.length) return;
+
+			for (let i = 0; i < length; i++) {
+				excerpt += `${content[i]} `;
+			}
+
+			if (showMore == 1) {
+				for (let i = length; i < content.length; i++) {
+					if (undefined != content[i]) {
+						remaining += `${content[i]} `;
+					}
+				}
+			}
+		} catch (err) {
+			console.log(err);
+		}
+		let result = { excerpt, remaining };
+		return result;
+	};
+
+	const generateExcerpt = (data, testimonial) => {
+		let {
+			content,
+			less_post_text,
+			more_post_text,
+			more_post,
+			more_post_ellipsis,
+			more_post_in_place,
+			excerpt_length
+		} = data;
+		let testimonialFull = testimonial.content.raw.replace(/(<([^>]+)>)/gi, '');
+		let testimonialObject = {};
+		switch (content) {
+			case 'excerpt':
+				testimonialObject = sliceTestimonialContentByWord(excerpt_length, testimonialFull, more_post_in_place);
+
+				if (more_post_in_place == 0) {
+					return (
+						<p>
+							{testimonialObject.excerpt}
+							<Fragment>
+								{testimonialFull.trim().length != testimonialObject.excerpt.trim().length && (
+									<a href={testimonial.link} className="readmore">
+										{data.more_post_text}
+									</a>
+								)}
+							</Fragment>
+						</p>
+					);
+				}
+
+				break;
+
+			case 'truncated':
+				break;
+		}
+	};
 	useEffect(() => {
 		if (1 == data.pagination) {
 			let obj = {
@@ -135,7 +201,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 			<div className="wpmtst-testimonial-inner testimonial-inner">
 				<div className="wpmtst-testimonial-content testimonial-content">
 					{data.title == 1 && generateHeading(testimonial, data.title_link)}
-					<p>{content.raw.replace(/(<([^>]+)>)/gi, '')}</p>
+					{generateExcerpt(data, testimonial)}
 				</div>
 				{data.thumbnail == 1 && generateFeaturedImage(testimonial.meta.featured_image, st_views.gravatar, data)}
 				{client_section.length > 0 && (
