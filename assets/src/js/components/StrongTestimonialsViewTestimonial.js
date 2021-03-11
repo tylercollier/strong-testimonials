@@ -197,11 +197,15 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 	};
 
 	return [
-		<div className={`wpmtst-testimonial testimonial post-${id}`}>
+		<div className={`wpmtst-testimonial testimonial post-${id} t-slide`}>
 			<div className="wpmtst-testimonial-inner testimonial-inner">
 				<div className="wpmtst-testimonial-content testimonial-content">
 					{data.title == 1 && generateHeading(testimonial, data.title_link)}
-					{generateExcerpt(data, testimonial)}
+					{data.content == 'excerpt' ? (
+						generateExcerpt(data, testimonial)
+					) : (
+						<p>{testimonial.content.raw.replace(/(<([^>]+)>)/gi, '')}</p>
+					)}
 				</div>
 				{data.thumbnail == 1 && generateFeaturedImage(testimonial.meta.featured_image, st_views.gravatar, data)}
 				{client_section.length > 0 && (

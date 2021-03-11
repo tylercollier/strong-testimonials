@@ -2,6 +2,7 @@ import Inspector from './inspector';
 import STViewForm from './StrongTestimonialsViewForm';
 import STStyle from './StrongTestimonialsStyle';
 import STViewDisplay from './StrongTestimonialsViewDisplay';
+import STViewSlideshow from './StrongTestimonialsViewSlideshow';
 
 /**
  * Wordpress deps
@@ -103,6 +104,24 @@ export const StrongTestimonialViewEdit = (props) => {
 		return testimonials;
 	};
 
+	const generateReadMoreButton = (data) => {
+		let url = st_views.adminURL.split('/');
+		url = `${url[0]}${url[2]}/?p=${data.more_page_id}`;
+		if ('wpmtst_view_footer' == data.more_page_hook) {
+			return (
+				<div className="readmore-page">
+					<a href={url}>{data.more_page_text}</a>
+				</div>
+			);
+		} else if ('wpmtst_after_testimonial' == data.more_page_hook) {
+			return (
+				<div className="readmore">
+					<a href={url}>{data.more_page_text}</a>
+				</div>
+			);
+		}
+	};
+
 	///////////
 
 	const blockControls = (
@@ -199,6 +218,20 @@ export const StrongTestimonialViewEdit = (props) => {
 							testimonials={testimonials}
 							convertDateToUnix={convertDateToUnix}
 							sortTestimonialsByDate={sortTestimonialsByDate}
+							generateReadMoreButton={generateReadMoreButton}
+						/>
+					</Fragment>
+				];
+			} else if ('slideshow' == view.data.mode) {
+				return [
+					<Fragment>
+						<Inspector onIdChange={(id) => onIdChange(id)} selectOptions={selectOptions()} {...props} />
+						<STViewSlideshow
+							view={view}
+							testimonials={testimonials}
+							convertDateToUnix={convertDateToUnix}
+							sortTestimonialsByDate={sortTestimonialsByDate}
+							generateReadMoreButton
 						/>
 					</Fragment>
 				];

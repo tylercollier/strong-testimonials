@@ -3,7 +3,7 @@ import STViewTestimonial from './StrongTestimonialsViewTestimonial';
 const { Component, Fragment, useEffect } = wp.element;
 
 export const StrongTestimonialsViewDisplay = (props) => {
-	const { testimonials, view, convertDateToUnix, sortTestimonialsByDate } = props;
+	const { testimonials, view, convertDateToUnix, sortTestimonialsByDate, generateReadMoreButton } = props;
 
 	const { data, id } = view;
 
@@ -31,33 +31,9 @@ export const StrongTestimonialsViewDisplay = (props) => {
 		return classNames;
 	};
 
-	const generateReadMoreButton = (data) => {
-		let url = st_views.adminURL.split('/');
-		url = `${url[0]}${url[2]}/?p=${data.more_page_id}`;
-		if ('wpmtst_view_footer' == data.more_page_hook) {
-			return (
-				<div className="readmore-page">
-					<a href={url}>{data.more_page_text}</a>
-				</div>
-			);
-		} else if ('wpmtst_after_testimonial' == data.more_page_hook) {
-			return (
-				<div className="readmore">
-					<a href={url}>{data.more_page_text}</a>
-				</div>
-			);
-		}
-	};
-
 	return [
 		<div className={generateMainContainerClasses(data)} data-count={testimonials.length} data-state="idle">
 			<div className={getClassNamesByLayout(data, data.column_count)}>
-				{/* {'masonry' == data.layout && (
-					<Fragment>
-						<div className="grid-sizer masonry-brick" />
-						<div className="gutter-sizer masonry-brick" />
-					</Fragment>
-				)} */}
 				{testimonials.length > 0 && (
 					<Fragment>
 						{testimonials.map((testimonial, index) => {
