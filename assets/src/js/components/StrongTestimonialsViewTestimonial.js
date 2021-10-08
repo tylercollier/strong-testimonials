@@ -6,13 +6,13 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 	const { meta } = testimonial.meta;
 	const { client_section } = data;
 
-	const stars = [ 1, 2, 3, 4, 5 ];
+	const stars = [1, 2, 3, 4, 5];
 
 	const initPager = (data) => {
 		let pagers = jQuery('.strong-pager[data-state="idle"]');
 
 		if (pagers.length) {
-			pagers.each(function() {
+			pagers.each(function () {
 				jQuery(this).strongPager(data);
 			});
 		}
@@ -20,12 +20,14 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 
 	const initMasonry = () => {
 		let grids = jQuery('.strong-view[data-state="idle"] .strong-masonry');
-		grids.prepend('<div class="grid-sizer"></div><div class="gutter-sizer"></div>');
+		grids.prepend(
+			'<div class="grid-sizer"></div><div class="gutter-sizer"></div>'
+		);
 		grids.masonry({
 			columnWidth: '.grid-sizer',
 			gutter: '.gutter-sizer',
 			itemSelector: '.wpmtst-testimonial',
-			percentPosition: true
+			percentPosition: true,
 		});
 		grids.closest('.strong-view').attr('data-state', 'init');
 	};
@@ -66,21 +68,32 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 			more_post,
 			more_post_ellipsis,
 			more_post_in_place,
-			excerpt_length
+			excerpt_length,
 		} = data;
-		let testimonialFull = testimonial.content.raw.replace(/(<([^>]+)>)/gi, '');
+		let testimonialFull = testimonial.content.raw.replace(
+			/(<([^>]+)>)/gi,
+			''
+		);
 		let testimonialObject = {};
 		switch (content) {
 			case 'excerpt':
-				testimonialObject = sliceTestimonialContentByWord(excerpt_length, testimonialFull, more_post_in_place);
+				testimonialObject = sliceTestimonialContentByWord(
+					excerpt_length,
+					testimonialFull,
+					more_post_in_place
+				);
 
 				if (more_post_in_place == 0) {
 					return (
 						<p>
 							{testimonialObject.excerpt}
 							<Fragment>
-								{testimonialFull.trim().length != testimonialObject.excerpt.trim().length && (
-									<a href={testimonial.link} className="readmore">
+								{testimonialFull.trim().length !=
+									testimonialObject.excerpt.trim().length && (
+									<a
+										href={testimonial.link}
+										className="readmore"
+									>
 										{data.more_post_text}
 									</a>
 								)}
@@ -100,7 +113,7 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 			let obj = {
 				pageSize: data.pagination_settings.per_page,
 				pagerLocation: data.pagination_settings.nav,
-				div: '.strong-content'
+				div: '.strong-content',
 			};
 			initPager(obj);
 		}
@@ -111,7 +124,11 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 
 	const generateHeading = (testimonial, titleLink) => {
 		if ('none' == titleLink) {
-			return <h3 class="wpmtst-testimonial-heading testimonial-heading">{title.rendered}</h3>;
+			return (
+				<h3 class="wpmtst-testimonial-heading testimonial-heading">
+					{title.rendered}
+				</h3>
+			);
 		} else if ('wpmtst_testimonial' == titleLink) {
 			return (
 				<h3 class="wpmtst-testimonial-heading testimonial-heading">
@@ -123,7 +140,10 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		} else {
 			return (
 				<h3 class="wpmtst-testimonial-heading testimonial-heading">
-					<a href={testimonial.meta.company_website[0]} rel="bookmark">
+					<a
+						href={testimonial.meta.company_website[0]}
+						rel="bookmark"
+					>
 						{title.rendered}
 					</a>
 				</h3>
@@ -200,29 +220,48 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 		<div className={`wpmtst-testimonial testimonial post-${id} t-slide`}>
 			<div className="wpmtst-testimonial-inner testimonial-inner">
 				<div className="wpmtst-testimonial-content testimonial-content">
-					{data.title == 1 && generateHeading(testimonial, data.title_link)}
+					{data.title == 1 &&
+						generateHeading(testimonial, data.title_link)}
 					{data.content == 'excerpt' ? (
 						generateExcerpt(data, testimonial)
 					) : (
-						<p>{testimonial.content.raw.replace(/(<([^>]+)>)/gi, '')}</p>
+						<p>
+							{testimonial.content.raw.replace(
+								/(<([^>]+)>)/gi,
+								''
+							)}
+						</p>
 					)}
 				</div>
-				{data.thumbnail == 1 && generateFeaturedImage(testimonial.meta.featured_image, st_views.gravatar, data)}
+				{data.thumbnail == 1 &&
+					generateFeaturedImage(
+						testimonial.meta.featured_image,
+						st_views.gravatar,
+						data
+					)}
 				{client_section.length > 0 && (
 					<Fragment>
 						{client_section.map((section, index) => {
 							switch (section.type) {
 								case 'text':
 									return (
-										<div class={`wpmtst-testimonial-field testimonial-field ${section.class}`}>
+										<div
+											class={`wpmtst-testimonial-field testimonial-field ${section.class}`}
+										>
 											{meta[section.field]}
 										</div>
 									);
 									break;
 								case 'link':
 									return (
-										<div class={`wpmtst-testimonial-field testimonial-field ${section.class}`}>
-											<a href={`${meta[section.url]}`} target="_blank" rel="nofollow  ">
+										<div
+											class={`wpmtst-testimonial-field testimonial-field ${section.class}`}
+										>
+											<a
+												href={`${meta[section.url]}`}
+												target="_blank"
+												rel="nofollow  "
+											>
 												{meta[section.field]}
 											</a>
 										</div>
@@ -235,13 +274,31 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 												<div className="wpmtst-testimonial-field testimonial-field ">
 													<span className="strong-rating-wrapper in-view">
 														<span className="strong-rating">
-															<span className="star" style={{ display: 'none' }} />
-															{stars.map((star, index) => {
-																if (star == meta.star_rating) {
-																	return <span className="star current" />;
+															<span
+																className="star"
+																style={{
+																	display:
+																		'none',
+																}}
+															/>
+															{stars.map(
+																(
+																	star,
+																	index
+																) => {
+																	if (
+																		star ==
+																		meta.star_rating
+																	) {
+																		return (
+																			<span className="star current" />
+																		);
+																	}
+																	return (
+																		<span className="star" />
+																	);
 																}
-																return <span className="star" />;
-															})}
+															)}
 														</span>
 													</span>
 												</div>
@@ -252,7 +309,9 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 								case 'date':
 									return (
 										<div class="wpmtst-testimonial-field testimonial-field ">
-											{convertDateToReadable(testimonial.date.split('T')[0])}
+											{convertDateToReadable(
+												testimonial.date.split('T')[0]
+											)}
 										</div>
 									);
 									break;
@@ -261,11 +320,11 @@ export const StrongTestimonialsViewTestimonial = (props) => {
 					</Fragment>
 				)}
 				{1 == data.more_page &&
-				'wpmtst_after_testimonial' == data.more_page_hook && (
-					<Fragment>{generateReadMoreButton(data)}</Fragment>
-				)}
+					'wpmtst_after_testimonial' == data.more_page_hook && (
+						<Fragment>{generateReadMoreButton(data)}</Fragment>
+					)}
 			</div>
-		</div>
+		</div>,
 	];
 };
 

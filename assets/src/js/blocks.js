@@ -1,5 +1,5 @@
-import Edit from './components/edit';
-import style from '../scss/blocks.scss';
+import DisplayEdit from './ViewDisplay/Edit';
+import SlideshowEdit from './ViewSlideshow/Edit';
 
 /**
  * Import wp deps
@@ -7,8 +7,9 @@ import style from '../scss/blocks.scss';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
+const { createBlock } = wp.blocks;
 
-class StrongTestimonialView {
+class ViewDisplay {
 	constructor() {
 		this.registerBlock();
 	}
@@ -19,30 +20,148 @@ class StrongTestimonialView {
 		this.blockAttributes = {
 			id: {
 				type: 'number',
-				default: 0
+				default: 0,
 			},
-			mode: {
+			viewType: {
 				type: 'string',
-				default: 'display'
-			}
+				default: 'display',
+			},
+			status: {
+				type: 'string',
+				default: 'ready',
+			},
+			template: {
+				type: 'string',
+				default: '',
+			},
+			layout: {
+				type: 'string',
+				default: '',
+			},
+			columns: {
+				type: 'number',
+				default: 0,
+			},
+			testimonials: {
+				type: 'array',
+				default: [],
+			},
 		};
 
 		registerBlockType(this.blockName, {
-			title: 'Strong Testimonial View',
-			description: __('Render ST View', 'strong-testimonials'),
+			title: 'Display',
+			description: __(
+				'A beatiful display to show all your testimonials',
+				'strong-testimonials'
+			),
 			icon: 'editor-quote',
-			category: 'common',
+			category: 'strong-testimonials-view',
 			supports: {
-				customClassName: false
+				customClassName: false,
 			},
-
 			attributes: this.blockAttributes,
-			edit: Edit,
+			transforms: {
+				to: [
+					{
+						attributes: {
+							...this.attributes,
+						},
+						type: 'block',
+						priority: 7,
+						blocks: ['strongtestimonials/slideshow'],
+						transform: function (attributes) {
+							return createBlock('strongtestimonials/slideshow', {
+								id: attributes.id,
+								status: attributes.status,
+								template: attributes.template,
+								testimonials: attributes.testimonials,
+							});
+						},
+					},
+				],
+			},
+			edit: DisplayEdit,
 			save: () => {
 				return null;
-			}
+			},
 		});
 	}
 }
 
-let strongTestimonialsView = new StrongTestimonialView();
+class ViewSlideshow {
+	constructor() {
+		this.registerBlock();
+	}
+
+	registerBlock() {
+		this.blockName = 'strongtestimonials/slideshow';
+
+		this.blockAttributes = {
+			id: {
+				type: 'number',
+				default: 0,
+			},
+			viewType: {
+				type: 'string',
+				default: 'slideshow',
+			},
+			status: {
+				type: 'string',
+				default: 'ready',
+			},
+			template: {
+				type: 'string',
+				default: '',
+			},
+			testimonials: {
+				type: 'array',
+				default: [],
+			},
+			config: {
+				type: 'object',
+				default: false,
+			}
+		};
+
+		registerBlockType(this.blockName, {
+			title: 'Slideshow',
+			description: __(
+				'A beautiful slideshow to show all your testimonials',
+				'strong-testimonials'
+			),
+			icon: 'editor-quote',
+			category: 'strong-testimonials-view',
+			supports: {
+				customClassName: false,
+			},
+			attributes: this.blockAttributes,
+			transforms: {
+				to: [
+					{
+						attributes: {
+							...this.attributes,
+						},
+						type: 'block',
+						priority: 7,
+						blocks: ['strongtestimonials/view'],
+						transform: function (attributes) {
+							return createBlock('strongtestimonials/view', {
+								id: attributes.id,
+								status: attributes.status,
+								template: attributes.template,
+								testimonials: attributes.testimonials,
+							});
+						},
+					},
+				],
+			},
+			edit: SlideshowEdit,
+			save: () => {
+				return null;
+			},
+		});
+	}
+}
+
+let viewDisplay = new ViewDisplay();
+let viewSlideshow = new ViewSlideshow();

@@ -3,7 +3,13 @@ import STViewTestimonial from './StrongTestimonialsViewTestimonial';
 const { Component, Fragment, useEffect } = wp.element;
 
 export const StrongTestimonialsViewDisplay = (props) => {
-	const { testimonials, view, convertDateToUnix, sortTestimonialsByDate, generateReadMoreButton } = props;
+	const {
+		testimonials,
+		view,
+		convertDateToUnix,
+		sortTestimonialsByDate,
+		generateReadMoreButton,
+	} = props;
 
 	const { data, id } = view;
 
@@ -32,7 +38,11 @@ export const StrongTestimonialsViewDisplay = (props) => {
 	};
 
 	return [
-		<div className={generateMainContainerClasses(data)} data-count={testimonials.length} data-state="idle">
+		<div
+			className={generateMainContainerClasses(data)}
+			data-count={testimonials.length}
+			data-state="idle"
+		>
 			<div className={getClassNamesByLayout(data, data.column_count)}>
 				{testimonials.length > 0 && (
 					<Fragment>
@@ -44,10 +54,16 @@ export const StrongTestimonialsViewDisplay = (props) => {
 											testimonial={testimonial}
 											index={index}
 											data={data}
-											convertDateToUnix={convertDateToUnix}
-											sortTestimonialsByDate={sortTestimonialsByDate}
-											generateReadMoreButton={generateReadMoreButton}
-										/>
+											convertDateToUnix={
+												convertDateToUnix
+											}
+											sortTestimonialsByDate={
+												sortTestimonialsByDate
+											}
+											generateReadMoreButton={
+												generateReadMoreButton
+											}
+										/>,
 									];
 								}
 							} else {
@@ -57,17 +73,23 @@ export const StrongTestimonialsViewDisplay = (props) => {
 										index={index}
 										data={data}
 										convertDateToUnix={convertDateToUnix}
-										sortTestimonialsByDate={sortTestimonialsByDate}
-										generateReadMoreButton={generateReadMoreButton}
-									/>
+										sortTestimonialsByDate={
+											sortTestimonialsByDate
+										}
+										generateReadMoreButton={
+											generateReadMoreButton
+										}
+									/>,
 								];
 							}
 						})}
 					</Fragment>
 				)}
 			</div>
-			{1 == data.more_page && <Fragment>{generateReadMoreButton(data)}</Fragment>}
-		</div>
+			{1 == data.more_page && (
+				<Fragment>{generateReadMoreButton(data)}</Fragment>
+			)}
+		</div>,
 	];
 };
 

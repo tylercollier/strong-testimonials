@@ -150,7 +150,6 @@
 		slider.settings = $.extend({}, defaults, config, options);
 		slider.debug = slider.settings.debug;
 		slider.logAs = slider.settings.logAs;
-
 		if (slider.debug) console.log(slider.logAs, 'slider.settings', slider.settings);
 
 		// store the original children
@@ -397,7 +396,7 @@
 		slider.active.last = slider.settings.startSlide === getPagerQty() - 1;
 		// if video is true, set up the fitVids plugin
 		if (slider.settings.video) { el.fitVids(); }
-
+		console.log(slider.settings);
 		//preloadImages
 		if (slider.settings.preloadImages === 'none') {
 		  preloadSelector = null;
@@ -451,7 +450,6 @@
 		}
 
 		if (slider.debug) console.log('current breakpoint', currentBreakpoint);
-
 		slider.settings.maxSlides = currentBreakpoint.maxSlides;
 		slider.settings.moveSlides = currentBreakpoint.moveSlides;
 		slider.settings.slideMargin = currentBreakpoint.slideMargin;
@@ -1101,7 +1099,7 @@
 		  if (slider.debug) console.log(slider.logAs, 'stop on navigation');
 		  el.stopAuto();
 		}
-                if ($('.strong-view').hasClass('rtl')) { 
+                if ($('.strong-view').hasClass('rtl')) {
                     el.goToPrevSlide();
                 } else {
                     el.goToNextSlide();

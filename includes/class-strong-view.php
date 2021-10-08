@@ -306,7 +306,7 @@ class Strong_View {
 
 		// A single script included in directory.
 		$script = WPMST()->templates->get_template_config( $this->atts, 'script', false );
-                
+
 		if ( $script ) {
 			$handle = 'testimonials-' . $this->get_att( 'template' );
 			wp_register_script( $handle, $script, $deps_array );
@@ -339,6 +339,7 @@ class Strong_View {
 			$handle = 'testimonials-' . str_replace( ':', '-', $this->get_att( 'template' ) );
 			$this->set_stylesheet( $handle );
 			wp_register_style( $handle, $stylesheet, array(), $this->plugin_version );
+
 			if ( $enqueue ) {
 				WPMST()->render->add_style( $handle );
 			} else {
