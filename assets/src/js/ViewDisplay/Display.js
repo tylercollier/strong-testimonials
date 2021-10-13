@@ -1,10 +1,16 @@
 import { getMainContainerClasses, getClassNamesByLayout } from './Helper';
 import Testimonial from '../components/Testimonial/Testimonial';
-const { Fragment } = wp.element;
+const { Fragment, useEffect } = wp.element;
 export const Display = (props) => {
-	const { attributes } = props;
+	const { attributes, initMasonry } = props;
 	const { id, template, layout, columns, testimonials } = attributes;
+	useEffect(() => {
+		if( 'masonry' == layout ) {
 
+			initMasonry();
+
+		}
+	}, [columns]);
 	return [
 		<div
 			className={getMainContainerClasses(id, template)}

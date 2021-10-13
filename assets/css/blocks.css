@@ -1,2 +1,15 @@
 div.st-block-preview{background:white;padding:50px 25px;border:1px solid black}div.st-view-select{width:-webkit-fit-content;width:-moz-fit-content;width:fit-content;min-width:100px}div.st-view-select label.components-input-control__label{margin-bottom:10px !important;font-weight:700}div.st-view-select div.components-input-control__container select.components-select-control__input{height:-webkit-fit-content;height:-moz-fit-content;height:fit-content}.wp-block[data-align="center"]{margin:0 auto !important}.strong-content.strong-masonry .wpmtst-testimonial{margin-top:0}.strong-masonry .wpmtst-testimonial,.strong-masonry .grid-sizer{width:100%}.strong-masonry .gutter-sizer{width:0}.strong-masonry .wpmtst-testimonial.grid-item--width2{width:100%}@media only screen and (min-width: 480px){.strong-masonry.columns-2 .wpmtst-testimonial,.strong-masonry.columns-2 .grid-sizer{width:48.5%}.strong-masonry.columns-2 .gutter-sizer{width:3%}.strong-masonry.columns-2 .wpmtst-testimonial.grid-item--width2{width:97%}.strong-masonry.columns-3 .wpmtst-testimonial,.strong-masonry.columns-3 .grid-sizer{width:31.33%}.strong-masonry.columns-3 .gutter-sizer{width:3%}.strong-masonry.columns-3 .wpmtst-testimonial.grid-item--width2{width:62.66%}.strong-masonry.columns-4 .wpmtst-testimonial,.strong-masonry.columns-4 .grid-sizer{width:22.75%}.strong-masonry.columns-4 .gutter-sizer{width:3%}.strong-masonry.columns-4 .wpmtst-testimonial.grid-item--width2{width:45.5%}}
 
+.st-testimonial-categories-input .st-categories {
+	display:flex;
+	justify-content: space-between;
+	padding: 10px 10px;
+	align-items: center;
+}
+
+.st-testimonial-categories-input .st-categories .st-category-count {
+	border: 1px solid #999;
+    font-size: 10px;
+    padding: 5px;
+    border-radius: 10px;
+}

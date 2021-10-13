@@ -41,7 +41,9 @@ add_action( 'init', 'wpmtst_register_cpt', 12 );
 function register_post_meta_rest() {
 	register_rest_field( 'wpm-testimonial', 'meta', array(
 		'get_callback' => function( $post_arr ) {
-			return array( 'meta' => get_post_meta( $post_arr['id'], false ), 'featured_image' => wp_get_attachment_url(get_post_thumbnail_id($post_arr['id'])) );
+			return array(
+				'meta' => get_post_meta( $post_arr['id'], false ), 'featured_image' => wp_get_attachment_url(get_post_thumbnail_id($post_arr['id'])),
+			);
 		},
 	) );
 }
@@ -85,7 +87,7 @@ function wpmtst_get_cpt_defaults() {
 		'items_list'            => __( 'Testimonials list', 'strong-testimonials' ),
 		'menu_name'             => _x( 'Testimonials', 'admin menu name', 'strong-testimonials' ),
 		'name_admin_bar'        => _x( 'Testimonial', 'admin bar menu name', 'strong-testimonials' ),
-		
+
 	);
 
 	$supports = array(
@@ -145,6 +147,7 @@ function wpmtst_get_tax_defaults() {
 		'labels'       => $labels,
 		'hierarchical' => true,
 		'rewrite'      => array( 'slug' => _x( 'testimonial-category', 'slug', 'strong-testimonials' ) ),
+		'show_in_rest' => true,
 	);
 
 	return $args;

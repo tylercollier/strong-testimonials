@@ -61,7 +61,7 @@ export const getDefaultSlideshowConfig = () => {
  * @returns object
  */
 export const getSlideshowObject = (config, testimonials) => {
-	console.log(config);
+
 	return {
 		mode: config.effect,
 		speed: config.speed,

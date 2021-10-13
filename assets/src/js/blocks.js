@@ -40,11 +40,31 @@ class ViewDisplay {
 			},
 			columns: {
 				type: 'number',
+				default: 2,
+			},
+			testimonialsToShow: {
+				type: 'number',
 				default: 0,
+			},
+			maxTestimonialCount: {
+				type: 'number',
+				default: -1,
 			},
 			testimonials: {
 				type: 'array',
 				default: [],
+			},
+			allTestimonialsCategories: {
+				type: 'array',
+				default: [],
+			},
+			selectedCategories: {
+				type: 'array',
+				default: [],
+			},
+			orderBy: {
+				type: 'string',
+				default: 'desc',
 			},
 		};
 
@@ -120,7 +140,7 @@ class ViewSlideshow {
 			config: {
 				type: 'object',
 				default: false,
-			}
+			},
 		};
 
 		registerBlockType(this.blockName, {

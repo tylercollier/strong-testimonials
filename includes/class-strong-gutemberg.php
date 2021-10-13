@@ -51,21 +51,29 @@ class Strong_Gutemberg {
 		$view_array       = wpmtst_get_view( 1 );
         $view             = unserialize( $view_array['value'] );
 
+		$attributes_defaults = array(
+			'template' => 'default',
+			'layout'   => ''
+		);
 
-		if ( $this->attributes == null ) {
-			return;
-		}
+		wp_enqueue_script( 'st-selectize', WPMTST_PUBLIC_URL . 'js/selectize.js', null, MODULA_LITE_VERSION, true );
+		wp_enqueue_style( 'st-selectize', WPMTST_PUBLIC_URL . 'css/selectize.default.css' );
+
+		wp_parse_args( $this->attributes, $attributes_defaults );
 
 		wp_enqueue_style( 'testimonials' . $this->attributes['template'], WPMTST_URL . 'templates/' . $this->attributes['template'] . '/content.css' );
-		if ( 'columns' == $this->attributes['layout'] ) {
-			wp_enqueue_style( 'column-style', WPMTST_PUBLIC_URL . 'css/columns.css' );
-		} elseif ( 'grid' == $this->attributes['layout'] ) {
-			wp_enqueue_style( 'grid-style', WPMTST_PUBLIC_URL . 'css/grid.css' );
-		} elseif ( 'masonry' == $this->attributes['layout'] ) {
-			wp_enqueue_style( 'masonry-style', WPMTST_PUBLIC_URL . 'css/masonry.css' );
+		if( isset( $this->attributes['layout'] ) ) {
+			if ( 'columns' == $this->attributes['layout'] ) {
+				wp_enqueue_style( 'column-style', WPMTST_PUBLIC_URL . 'css/columns.css' );
+			} elseif ( 'grid' == $this->attributes['layout'] ) {
+				wp_enqueue_style( 'grid-style', WPMTST_PUBLIC_URL . 'css/grid.css' );
+			} elseif ( 'masonry' == $this->attributes['layout'] ) {
+				wp_enqueue_style( 'masonry-style', WPMTST_PUBLIC_URL . 'css/masonry.css' );
+			}
 		}
 
-		wp_register_script(
+
+		wp_enqueue_script(
 			'jquery-actual',
 			WPMTST_PUBLIC_URL . 'js/lib/actual/jquery-actual.js',
 			array( 'jquery' ),
@@ -73,7 +81,8 @@ class Strong_Gutemberg {
 			true
 		);
 
-		wp_register_script( 'verge', WPMTST_PUBLIC_URL . 'js/lib/verge/verge.js', array(), '1.10.2', true );
+		WPMST()->render->add_script( 'jquery-masonry' );
+		wp_enqueue_script( 'verge', WPMTST_PUBLIC_URL . 'js/lib/verge/verge.js', array(), '1.10.2', true );
 		wp_enqueue_script( 'wpmtst-slider', WPMTST_PUBLIC_URL . 'js/lib/strongslider/jquery-strongslider.js', array( 'jquery-actual', 'imagesloaded', 'underscore', 'verge' ), false, true );
 
 		// wp_enqueue_style( 'slider-controls-' . $view['slideshow_settings']['controls_type'] . '-' . $view['slideshow_settings']['controls_style'] );
