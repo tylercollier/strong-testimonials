@@ -1,14 +1,37 @@
 import Loading from '../components/Loading';
 import Display from './Display';
 import Inspector from './Inspector';
-import { getTestimonialsCategories } from '../components/Rest';
+import { getTestimonialsCategories, getTestimonials } from '../components/Rest';
 
 const { __ } = wp.i18n;
-const { Component, Fragment, useEffect } = wp.element;
+const { Component, Fragment, useEffect, useReducer } = wp.element;
 const { withSelect, useSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
 const { BlockControls } = wp.blockEditor;
 const { compose } = wp.compose;
+
+function reducer(initialState, action) {
+	console.log(action);
+	switch (action.type) {
+		case 'ORDERBYCHANGE':
+			initialState.orderBy = action.payload.value;
+			action.payload.setAttributes({
+				orderBy: action.payload.value,
+				testimonials: [],
+			});
+			return initialState;
+
+		case 'SELECTEDCATEGORYCHANGE':
+			action.payload.setAttributes({
+				selectedCategories: action.payload.value,
+				testimonials: [],
+			});
+
+			return initialState;
+		default:
+			return initialState;
+	}
+}
 
 export const ViewDisplayEdit = (props) => {
 	const { setAttributes, attributes } = props;
@@ -19,6 +42,11 @@ export const ViewDisplayEdit = (props) => {
 		selectedCategories,
 		orderBy,
 	} = attributes;
+
+	const [initialState, dispatch] = useReducer(reducer, {
+		orderBy: orderBy,
+		selectedCategories: selectedCategories,
+	});
 
 	const testimonialsFetch = useSelect((select) => {
 		const { getEntityRecords } = select('core');
@@ -104,31 +132,12 @@ export const ViewDisplayEdit = (props) => {
 		}
 	});
 
+	/**
+	 * This "useEffect" hook is used solely for changes that happen for properties that change the values of the testimonials
+	 */
 	useEffect(() => {
-		// let p = new Promise((resolve, reject) => {
-		// 	let updatedTestimonials = testimonialsFetch;
-		// 	if (updatedTestimonials.length != 0) {
-		// 		resolve(updatedTestimonials);
-		// 	} else {
-		// 		reject(updatedTestimonials, 'loading');
-		// 	}
-		// });
-		// p.then((updatedTestimonials) => {
-		// 	setAttributes({ testimonials: updatedTestimonials });
-		// }).catch((updatedTestimonials, message) => {
-		// 	updatedTestimonials = testimonialsFetch;
-		// 	setAttributes({ testimonials: updatedTestimonials });
-		// });
-		// if (0 != updatedTestimonials.length) {
-		// 	setAttributes({
-		// 		status: 'ready',
-		// 		testimonials: updatedTestimonials,
-		// 	});
-		// }
-
-	}, [orderBy]);
-
-	useEffect(() => {});
+		getTestimonials(attributes, setAttributes, testimonialsFetch);
+	}, [orderBy, selectedCategories]);
 
 	if (status === 'loading') {
 		return [<Loading status={status} />];
@@ -136,7 +145,12 @@ export const ViewDisplayEdit = (props) => {
 
 	return (
 		<>
-			<Inspector {...props} testimonialsFetch={testimonialsFetch} />
+			<Inspector
+				{...props}
+				testimonialsFetch={testimonialsFetch}
+				dispatch={dispatch}
+				getTestimonials={getTestimonials}
+			/>
 			<Display {...props} initMasonry={initMasonry} />
 		</>
 	);

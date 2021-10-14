@@ -1,7 +1,12 @@
 const { useEffect } = wp.element;
 const ViewSelectControl = (props) => {
-	const { allTestimonialsCategories, selectedCategories, setAttributes } =
-		props;
+	const {
+		allTestimonialsCategories,
+		selectedCategories,
+		setAttributes,
+		dispatch,
+	} = props;
+
 	useEffect(() => {
 		let categories = [];
 		allTestimonialsCategories.forEach((category) => {
@@ -12,8 +17,14 @@ const ViewSelectControl = (props) => {
 				slug: category.slug,
 			});
 		});
-		if( !jQuery('.st-testimonial-categories-input').hasClass('selectize-control') ) {
-			let selectInput = jQuery('.st-testimonial-categories-input').selectize({
+		if (
+			!jQuery('.st-testimonial-categories-input').hasClass(
+				'selectize-control'
+			)
+		) {
+			let selectInput = jQuery(
+				'.st-testimonial-categories-input'
+			).selectize({
 				valueField: 'value',
 				plugins: ['remove_button'],
 				labelField: 'label',
@@ -40,15 +51,24 @@ const ViewSelectControl = (props) => {
 					},
 				},
 				onChange: (value) => {
-					let res = value.split(',');
-					setAttributes({ selectedCategories: res });
+					value = value.split(',');
+					dispatch({
+						type: 'SELECTEDCATEGORYCHANGE',
+						payload: { value, setAttributes },
+					});
 				},
 			});
 		}
-
 	}, []);
 
-	return <input className="st-testimonial-categories-input" value={0 == selectedCategories.length ? '' : selectedCategories.join() }/>;
+	return (
+		<input
+			className="st-testimonial-categories-input"
+			value={
+				0 == selectedCategories.length ? '' : selectedCategories.join()
+			}
+		/>
+	);
 };
 
 export default ViewSelectControl;

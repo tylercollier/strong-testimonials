@@ -15,7 +15,7 @@ const {
 } = wp.components;
 
 const Inspector = (props) => {
-	const { attributes, setAttributes, testimonialsFetch } = props;
+	const { attributes, setAttributes, testimonialsFetch, dispatch } = props;
 	const {
 		layout,
 		columns,
@@ -23,13 +23,9 @@ const Inspector = (props) => {
 		maxTestimonialCount,
 		allTestimonialsCategories,
 		selectedCategories,
-		orderBy
+		orderBy,
 	} = attributes;
 
-	const onOrderByChange = (value) => {
-		setAttributes({orderBy: value });
-		setAttributes({ testimonials: testimonialsFetch });
-	}
 
 	return (
 		<>
@@ -101,6 +97,7 @@ const Inspector = (props) => {
 								}
 								selectedCategories={selectedCategories}
 								testimonialsFetch={testimonialsFetch}
+								dispatch={dispatch}
 							/>
 						</>
 					)}
@@ -113,15 +110,26 @@ const Inspector = (props) => {
 						value={orderBy}
 						options={[
 							{
-								label: __('Newest First', 'strong-testimonials'),
+								label: __(
+									'Newest First',
+									'strong-testimonials'
+								),
 								value: 'desc',
 							},
 							{
-								label: __('Oldest First', 'strong-testimonials'),
+								label: __(
+									'Oldest First',
+									'strong-testimonials'
+								),
 								value: 'asc',
 							},
 						]}
-						onChange={(value) => onOrderByChange(value)}
+						onChange={(value) =>
+							dispatch({
+								type: 'ORDERBYCHANGE',
+								payload: { value, setAttributes },
+							})
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>
