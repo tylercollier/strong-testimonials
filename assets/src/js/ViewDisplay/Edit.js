@@ -4,14 +4,13 @@ import Inspector from './Inspector';
 import { getTestimonialsCategories, getTestimonials } from '../components/Rest';
 
 const { __ } = wp.i18n;
-const { Component, Fragment, useEffect, useReducer } = wp.element;
+const { Component, Fragment, useEffect, useReducer, useState } = wp.element;
 const { withSelect, useSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
 const { BlockControls } = wp.blockEditor;
 const { compose } = wp.compose;
 
 function reducer(initialState, action) {
-	console.log(action);
 	switch (action.type) {
 		case 'ORDERBYCHANGE':
 			initialState.orderBy = action.payload.value;
@@ -41,6 +40,7 @@ export const ViewDisplayEdit = (props) => {
 		testimonialsToShow,
 		selectedCategories,
 		orderBy,
+		id,
 	} = attributes;
 
 	const [initialState, dispatch] = useReducer(reducer, {
@@ -62,24 +62,46 @@ export const ViewDisplayEdit = (props) => {
 
 		return getEntityRecords('postType', 'wpm-testimonial', query) || [];
 	});
+	//Set the masonry object state to false to begin with .
+	const [masonryObj, setMasonryObj] = useState(false);
 
-	const initMasonry = () => {
-		let grids = jQuery('.strong-view .strong-masonry');
+	const initMasonry = (id, setMasonryObj) => {
+		let grid = jQuery(`.strong-view-id-${id} .strong-masonry`);
 
 		if (jQuery('.grid-sizer').length == 0) {
-			grids.prepend(
+			grid.prepend(
 				'<div class="grid-sizer"></div><div class="gutter-sizer"></div>'
 			);
 		}
 
-		let masonry = grids.masonry({
+		let masonry = grid.masonry({
 			columnWidth: '.grid-sizer',
 			gutter: '.gutter-sizer',
 			itemSelector: '.wpmtst-testimonial',
 			percentPosition: true,
 		});
+		// Pass in the event listener the setMasonryObj function
+		masonry[0].setMasonryObj = setMasonryObj;
 
-		grids.closest('.strong-view').attr('data-state', 'init');
+		masonry.on('layoutComplete', onMasonryLayoutComplete);
+
+		grid.closest(`.strong-view-id-${id}`).attr('data-state', 'init');
+
+		return;
+	};
+
+	const onMasonryLayoutComplete = (event, items) => {
+		//Set the masonry object to the state
+		event.currentTarget.setMasonryObj(event.currentTarget);
+	};
+
+	const destroyMasonry = (id, masonryObj) => {
+		if (false != masonryObj) {
+			jQuery(masonryObj).masonry('destroy');
+			return true;
+		}
+
+		return false;
 	};
 
 	// Initalize defaults if no id is found. This only takes place once.
@@ -150,8 +172,14 @@ export const ViewDisplayEdit = (props) => {
 				testimonialsFetch={testimonialsFetch}
 				dispatch={dispatch}
 				getTestimonials={getTestimonials}
+				destroyMasonry={destroyMasonry}
+				masonryObj={masonryObj}
 			/>
-			<Display {...props} initMasonry={initMasonry} />
+			<Display
+				{...props}
+				initMasonry={initMasonry}
+				setMasonryObj={setMasonryObj}
+			/>
 		</>
 	);
 };

@@ -1,0 +1,1921 @@
+/**
+ * Strong Testimonials Bold template
+ */
+/* Clears
+-----------------------------------------------*/
+.clear {
+  clear: both;
+}
+
+/**
+Minimum paragraph width means no short words in skinny space next to image
+in columns or small screens.
+
+This workaround is needed until we can use flexbox properly
+or CSS offers container queries.
+
+Thanks https://css-tricks.com/minimum-paragraph-widths/
+*/
+.maybe-clear {
+  content: "";
+  /* this value seems to work well in both responsive and Masonry */
+  width: 6em;
+  display: block;
+  overflow: hidden;
+}
+
+/* Base
+-----------------------------------------------*/
+.strong-view.wpmtst-bold {
+  display: block;
+  width: 100%;
+}
+.strong-view.wpmtst-bold div {
+  box-sizing: border-box;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial {
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial.t-slide {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.strong-view.wpmtst-bold .wpmtst-testimonial-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-image {
+  max-width: 100%;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-field-before {
+  margin-right: 0.5em;
+}
+.strong-view.wpmtst-bold a.readmore,
+.strong-view.wpmtst-bold a.readmore-toggle {
+  white-space: nowrap;
+  z-index: 100;
+}
+.strong-view.wpmtst-bold a.readmore-toggle:hover {
+  cursor: pointer;
+}
+
+.strong-view.slider-container {
+  opacity: 1;
+}
+.strong-view .screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.strong-view.wpmtst-bold {
+  margin-bottom: 1em;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial {
+  margin-bottom: 1em;
+  text-align: center;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial:first-child {
+  margin-top: 0;
+  
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial:last-child {
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-inner {
+  padding: 20px;
+  border-radius: 3px;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-inner > *:not(:nth-last-child(2)):not(:last-child) {
+	margin-bottom: 5px;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-content {
+  background: inherit;
+  font-size: 2em;
+  line-height: 1.3;
+  padding: 0;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-content p:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-content p:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-image {
+  margin: 0 auto 20px;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-image img {
+  border-radius: 3px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-image a {
+  text-decoration: none;
+  box-shadow: none;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-image .initials {
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
+  display: table-cell;
+  vertical-align: middle;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-field {
+  font-size: 1.2em;
+}
+.strong-view.wpmtst-bold .wpmtst-testimonial-name {
+  font-weight: 700;
+}
+.strong-view.wpmtst-bold .readmore a {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  font-size: 1.2em;
+  padding: 0.5em;
+  display: block;
+}
+.strong-view.wpmtst-bold .readmore-page {
+  font-size: 1.2em;
+  border-radius: 3px;
+  padding: 1em;
+  text-align: center;
+}
+
+/* Pagination
+-----------------------------------------------*/
+/* Simple pagination
+-----------------------------------------------*/
+.strong-view.wpmtst-bold.strong-pager {
+  display: none;
+}
+
+.simplePagerList {
+  /* match .strong-content container */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.strong-view ul.simplePagerNav {
+  margin: 0 auto;
+  padding: 0;
+  display: inline-block;
+}
+.strong-view ul.simplePagerNav li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.strong-view ul.simplePagerNav li a {
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  outline: none;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.strong-view ul.simplePagerNav li a:hover {
+  background: #BBB;
+  color: #FFF;
+}
+.strong-view ul.simplePagerNav li.currentPage a {
+  text-decoration: none;
+  background: #999;
+  color: #FFF;
+}
+
+.strong-view.rtl ul.simplePagerNav li {
+  float: right;
+}
+
+/* Standard pagination
+-----------------------------------------------*/
+.strong-view .nav-links {
+  margin: 20px auto;
+  text-align: center;
+}
+.strong-view .nav-links a, .strong-view .nav-links span {
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  transition: background 0.2s ease;
+}
+.strong-view .nav-links a.current, .strong-view .nav-links span.current {
+  background: #999;
+  color: #FFF;
+}
+.strong-view .nav-links a {
+  outline: none;
+  text-decoration: none;
+}
+.strong-view .nav-links a:hover,
+.strong-view .nav-links a.prev:hover,
+.strong-view .nav-links a.next:hover,
+.strong-view .nav-links span:hover {
+  background: #BBB;
+  color: #FFF;
+}
+
+/* Slideshow
+-----------------------------------------------*/
+.strong-view.wpmtst-bold.slider-container .strong-content {
+  margin: 0 auto;
+}
+.strong-view.wpmtst-bold.slider-container .wpmtst-testimonial:not(:first-child) {
+  display: none;
+}
+.strong-view.wpmtst-bold.nav-position-inside .wpmtst-testimonial-inner {
+  padding-bottom: 60px;
+}
+.strong-view.wpmtst-bold.controls-type-sides .wpmtst-testimonial-inner {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+/* Responsive
+-----------------------------------------------*/
+@media only screen and (max-width: 640px) {
+  .strong-view.wpmtst-bold .wpmtst-testimonial-content {
+    font-size: 1.5em;
+    line-height: 1.2;
+  }
+}
+
+.disabled { 
+  display: none!important;
+}
+
+.wpmslider-controls.disabled {
+    display: block !important;
+}
+
+/*  Compatibility with metaslider pro layers display
+----------------------------------------------------*/
+
+.msHtmlOverlay .layer .disabled {
+    display: block !important;
+}
+/**
+ * Strong Testimonials Default Form template
+ */
+.strong-form {
+  position: relative;
+  margin: 0 auto;
+}
+.strong-form .form-field {
+  margin-bottom: 1.5em;
+}
+.strong-form .form-field.wpmtst-submit {
+  margin-bottom: 0;
+}
+.strong-form .required.symbol:after {
+  content: '*';
+  color: #FF0000;
+  font-size: 1.5em;
+  font-weight: 400;
+  margin: 0 5px;
+  position: relative;
+  top: 5px;
+}
+.strong-form label {
+  display: inline-block;
+  float: none;
+  width: auto;
+}
+.strong-form input[type="text"],
+.strong-form input[type="email"],
+.strong-form input[type="url"],
+.strong-form input[type="file"],
+.strong-form select,
+.strong-form textarea {
+  box-sizing: border-box;
+  display: block;
+  float: none;
+  width: 100%;
+}
+.strong-form input[type="checkbox"] {
+  -webkit-transform: scale(1.4);
+  -moz-transform: scale(1.4);
+  -ms-transform: scale(1.4);
+  transform: scale(1.4);
+  margin-left: 12px;
+  margin-right: 6px;
+}
+.strong-form input[type="checkbox"] + label {
+  font-weight: 400;
+  padding: 5px;
+}
+.strong-form input[type="checkbox"]:focus + label {
+  outline: 1px solid #CCC;
+}
+.strong-form textarea {
+  height: 16em;
+}
+.strong-form span.error,
+.strong-form label.error {
+  display: block;
+}
+.strong-form .before {
+  display: block;
+}
+.strong-form .after {
+  display: block;
+}
+
+.strong-form-inner {
+  padding: 20px;
+}
+
+input.captcha {
+  display: block;
+  width: auto;
+}
+
+img.captcha {
+  border: 0;
+}
+
+.wpmtst-captcha {
+  margin-bottom: 1em;
+}
+
+/* category checklist */
+.strong-form ul.strong-category-list,
+.strong-form ul.strong-category-list ul.children {
+  list-style-type: none;
+}
+.strong-form ul.strong-category-list label,
+.strong-form ul.strong-category-list ul.children label {
+  font-weight: 400;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+.strong-form ul.strong-category-list {
+  margin: 0;
+  padding-left: 0;
+}
+.strong-form ul.strong-category-list ul.children {
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+/* The "wait" spinner on form submission.
+-----------------------------------------------*/
+.strong-form-wait {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+.strong-form-wait .message {
+  position: absolute;
+  top: calc( 50% - 25px );
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  color: #111;
+}
+
+.strong-form-wait .message img {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+@keyframes wpmtst-spin{
+  0%{
+      transform: rotate(360deg);
+      }
+  100%{
+      transform: rotate(0deg);
+      }
+}
+
+.strong-form-wait .message img{
+  animation: wpmtst-spin 2.5s infinite 0s linear;
+}
+
+.strong-form {
+  /* field-wrap is used for checkboxes, radios, star ratings */
+}
+.strong-form label {
+  font-weight: 700;
+}
+.strong-form .form-field .after {
+  font-size: .9em;
+  font-style: italic;
+}
+.strong-form input.error,
+.strong-form textarea.error,
+.strong-form select.error {
+  background: #F9E5E6;
+  border: 1px solid #E8AAAD;
+  color: #B50007;
+}
+.strong-form span.error,
+.strong-form label.error {
+  color: #B50007;
+}
+.strong-form .field-wrap {
+  display: block;
+  font-weight: 400;
+  border: 1px solid transparent;
+}
+.strong-form .field-wrap.error {
+  border-radius: 3px;
+  background: #F9E5E6;
+  border: 1px solid #E8AAAD;
+  color: #B50007;
+}
+.strong-form .field-wrap.error .checkbox-label {
+  outline: none;
+}
+.strong-form .field-wrap.error .strong-rating {
+  outline-color: #E8AAAD;
+}
+.strong-form .field-wrap input + label + .required.symbol:after {
+  margin-left: 0;
+}
+
+/* Dark Theme
+-----------------------------------------------*/
+.strong-form.dark input.error,
+.strong-form.dark textarea.error,
+.strong-form.dark select.error {
+  border: 1px solid #FF6666;
+}
+.strong-form.dark .field-wrap.error {
+  border: 1px solid #FF6666;
+}
+.strong-form.dark .field-wrap.error .checkbox-label {
+  color: #111;
+}
+.strong-form.dark .field-wrap.error .strong-rating {
+  outline-color: #FF6666;
+}
+
+/**
+ * Strong Testimonials Default template
+ */
+/* Clears
+-----------------------------------------------*/
+.clear {
+  clear: both;
+}
+
+/**
+Minimum paragraph width means no short words in skinny space next to image
+in columns or small screens.
+
+This workaround is needed until we can use flexbox properly
+or CSS offers container queries.
+
+Thanks https://css-tricks.com/minimum-paragraph-widths/
+*/
+.maybe-clear {
+  content: "";
+  /* this value seems to work well in both responsive and Masonry */
+  width: 6em;
+  display: block;
+  overflow: hidden;
+}
+
+/* Base
+-----------------------------------------------*/
+.strong-view.wpmtst-default {
+  display: block;
+  width: 100%;
+}
+.strong-view.wpmtst-default div {
+  box-sizing: border-box;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial {
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial.t-slide {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-image {
+  max-width: 100%;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-field-before {
+  margin-right: 0.5em;
+}
+.strong-view.wpmtst-default a.readmore,
+.strong-view.wpmtst-default a.readmore-toggle {
+  white-space: nowrap;
+  z-index: 100;
+}
+.strong-view.wpmtst-default a.readmore-toggle:hover {
+  cursor: pointer;
+}
+
+.strong-view.slider-container {
+  opacity: 1;
+}
+.strong-view .screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* Template
+-----------------------------------------------*/
+.strong-view.wpmtst-default .strong-content {
+  margin: 20px auto 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial {
+  border: 1px solid #E6E6E6;
+  margin: 20px auto;
+  text-align: left;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial:first-child {
+  margin-top: 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial:last-child {
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-inner {
+  border: 1px solid #FFFFFF;
+  padding: 20px;
+  text-align: left;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-inner > *:not(:nth-last-child(2)):not(:last-child) {
+	margin-bottom: 5px;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-heading {
+  background: url("img/quotes.png") no-repeat scroll left center transparent;
+  margin-top: 0;
+  padding-left: 40px;
+  text-align: left;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-content p:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-content p:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-image {
+  margin-top: 0.25em;
+  margin-right: 1em;
+  margin-bottom: 0.25em;
+  float: left;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-image img {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #EFEFEF;
+  padding: 6px;
+  margin: 0 auto;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-image a {
+  text-decoration: none;
+  box-shadow: none;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-image .initials {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border: 1px solid #EFEFEF;
+  padding: 6px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-field {
+  text-align: right;
+}
+.strong-view.wpmtst-default .wpmtst-testimonial-name {
+  font-weight: bold;
+}
+.strong-view.wpmtst-default .readmore {
+  margin-top: 1em;
+}
+.strong-view.wpmtst-default .strong-view-footer {
+  margin-bottom: 20px;
+}
+.strong-view.wpmtst-default .readmore-page {
+  margin-top: 20px;
+  padding: 1em;
+  text-align: center;
+  border: 1px solid #E6E6E6;
+}
+
+/* Pagination
+-----------------------------------------------*/
+/* Simple pagination
+-----------------------------------------------*/
+.strong-view.wpmtst-default.strong-pager {
+  display: none;
+}
+
+.simplePagerList {
+  /* match .strong-content container */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.strong-view ul.simplePagerNav {
+  margin: 0 auto;
+  padding: 0;
+  display: inline-block;
+}
+.strong-view ul.simplePagerNav li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.strong-view ul.simplePagerNav li a {
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  outline: none;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.strong-view ul.simplePagerNav li a:hover {
+  background: #BBB;
+  color: #FFF;
+}
+.strong-view ul.simplePagerNav li.currentPage a {
+  text-decoration: none;
+  background: #999;
+  color: #FFF;
+}
+
+.strong-view.rtl ul.simplePagerNav li {
+  float: right;
+}
+
+/* Standard pagination
+-----------------------------------------------*/
+.strong-view .nav-links {
+  margin: 20px auto;
+  text-align: center;
+}
+.strong-view .nav-links a, .strong-view .nav-links span {
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  transition: background 0.2s ease;
+}
+.strong-view .nav-links a.current, .strong-view .nav-links span.current {
+  background: #999;
+  color: #FFF;
+}
+.strong-view .nav-links a {
+  outline: none;
+  text-decoration: none;
+}
+.strong-view .nav-links a:hover,
+.strong-view .nav-links a.prev:hover,
+.strong-view .nav-links a.next:hover,
+.strong-view .nav-links span:hover {
+  background: #BBB;
+  color: #FFF;
+}
+
+/* Slideshow
+-----------------------------------------------*/
+.strong-view.wpmtst-default.slider-container {
+  /* If vertical or fade slideshow, move border from individual testimonials to viewport. */
+}
+.strong-view.wpmtst-default.slider-container.slider-adaptive:not(.slider-mode-horizontal) .wpmslider-viewport {
+  border: 1px solid #E6E6E6;
+}
+.strong-view.wpmtst-default.slider-container.slider-adaptive:not(.slider-mode-horizontal) .wpmtst-testimonial {
+  border: 0;
+}
+.strong-view.wpmtst-default.slider-container .strong-content {
+  margin: 0 auto;
+}
+.strong-view.wpmtst-default.slider-container .wpmtst-testimonial:not(:first-child) {
+  display: none;
+}
+.strong-view.wpmtst-default.nav-position-inside .wpmtst-testimonial-inner {
+  padding-bottom: 48px;
+}
+.strong-view.wpmtst-default.controls-type-sides .wpmtst-testimonial-inner {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.strong-view.wpmtst-default.slider-stretch .wpmtst-testimonial-inner {
+  /* to force same height for all slides */
+  height: 100%;
+}
+
+/* Responsive
+-----------------------------------------------*/
+@media only screen and (max-width: 320px) {
+  .strong-view.wpmtst-default .wpmtst-testimonial-image {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/* Remove quote background image */
+@media only screen and (max-width: 320px) and (orientation: portrait) {
+  .strong-view.wpmtst-default .wpmtst-testimonial-heading {
+    background: none;
+    padding-left: 0;
+  }
+}
+/* RTL
+-----------------------------------------------*/
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial,
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial-inner,
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial-heading {
+  text-align: right;
+}
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial-image {
+  float: right;
+  margin-left: 1em;
+}
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial-field {
+  text-align: left;
+}
+
+.strong-view.wpmtst-default.rtl .wpmtst-testimonial-heading {
+  padding-right: 40px;
+  background-position: right;
+}
+
+/* Option: Image Right
+-----------------------------------------------*/
+.strong-view.wpmtst-default.image-right .wpmtst-testimonial-image {
+  float: right;
+  margin-top: .25em;
+  margin-bottom: 0.25em;
+  margin-left: 1em;
+}
+.strong-view.wpmtst-default.image-right .wpmtst-testimonial-field {
+  text-align: left;
+}
+
+.strong-view.wpmtst-default.image-right.rtl .wpmtst-testimonial-image {
+  float: left;
+  margin-left: 0;
+  margin-right: 1em;
+}
+.strong-view.wpmtst-default.image-right.rtl .wpmtst-testimonial-field {
+  text-align: right;
+}
+
+/* Option: No Quotes
+-----------------------------------------------*/
+.strong-view.wpmtst-default.no-quotes .wpmtst-testimonial-heading {
+  background: none;
+  padding-left: 0;
+}
+
+/* Option: Dark Theme
+-----------------------------------------------*/
+.strong-view.wpmtst-default.dark .wpmtst-testimonial {
+  border: 1px solid #777;
+}
+.strong-view.wpmtst-default.dark .wpmtst-testimonial-inner {
+  border: 1px solid #333;
+}
+.strong-view.wpmtst-default.dark .readmore-page {
+  border: 2px solid #777;
+}
+.strong-view.wpmtst-default.dark ul.simplePagerNav li a:hover {
+  background: #777;
+  color: #FFF;
+}
+.strong-view.wpmtst-default.dark ul.simplePagerNav li.currentPage a {
+  background: #555;
+  color: #FFF;
+}
+
+.disabled {
+  display: none !important;
+}
+
+.wpmslider-controls.disabled {
+    display: block !important;
+}
+
+/*  Compatibility with metaslider pro layers display
+----------------------------------------------------*/
+
+.msHtmlOverlay .layer .disabled {
+    display: block !important;
+}
+/**
+ * Strong Testimonials Modern template
+ */
+/* Clears
+-----------------------------------------------*/
+.clear {
+  clear: both;
+}
+
+/**
+Minimum paragraph width means no short words in skinny space next to image
+in columns or small screens.
+
+This workaround is needed until we can use flexbox properly
+or CSS offers container queries.
+
+Thanks https://css-tricks.com/minimum-paragraph-widths/
+*/
+.maybe-clear {
+  content: "";
+  /* this value seems to work well in both responsive and Masonry */
+  width: 6em;
+  display: block;
+  overflow: hidden;
+}
+
+/* Base
+-----------------------------------------------*/
+.strong-view.wpmtst-modern {
+  display: block;
+  width: 100%;
+}
+.strong-view.wpmtst-modern div {
+  box-sizing: border-box;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial {
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+
+.strong-view.wpmtst-modern .wpmtst-testimonial.t-slide {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-image {
+  max-width: 100%;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-field-before {
+  margin-right: 0.5em;
+}
+.strong-view.wpmtst-modern a.readmore,
+.strong-view.wpmtst-modern a.readmore-toggle {
+  white-space: nowrap;
+  z-index: 100;
+}
+.strong-view.wpmtst-modern a.readmore-toggle:hover {
+  cursor: pointer;
+}
+
+.strong-view.slider-container {
+  opacity: 1;
+}
+.strong-view .screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* Template
+-----------------------------------------------*/
+.strong-view.wpmtst-modern .wpmtst-testimonial {
+  margin: 20px auto;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial:first-child {
+  margin-top: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial:last-child {
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-inner {
+  padding: 30px;
+  text-align: center;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-inner > *:not(:nth-last-child(2)):not(:last-child) {
+	margin-bottom: 5px;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-heading {
+  font-weight: 700;
+  margin-top: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content {
+  font-size: 1.3em;
+  font-style: italic;
+  margin: 0 56px;
+  position: relative;
+  text-align: center;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content p:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content p:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content:before,
+.strong-view.wpmtst-modern .wpmtst-testimonial-content:after {
+  color: #CDCDCD;
+  background:#cdcdcd;
+  width:36px;
+  height:36px;
+  font-size: 36px;
+  font-style: normal;
+  line-height: 36px;
+  position: absolute;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content:before {
+  content: "";
+  left: -56px;
+  top: 0;
+  -webkit-mask: url('../../public/svg/quote-left-solid.svg') center center no-repeat;
+  mask: url('../../public/svg/quote-left-solid.svg') center center no-repeat;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-content:after {
+  content: "";
+  right: -56px;
+  bottom: 0;
+  -webkit-mask: url('../../public/svg/quote-right-solid.svg') center center no-repeat;
+  mask: url('../../public/svg/quote-right-solid.svg') center center no-repeat;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-field {
+  clear: both;
+  text-align: center;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-name {
+  font-size: 1.3em;
+  font-weight: 700;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-date {
+  font-size: 0.9em;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-company {
+  font-size: 1.1em;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-image {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-image img {
+  border-radius: 50%;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-image a {
+  text-decoration: none;
+  box-shadow: none;
+}
+.strong-view.wpmtst-modern .wpmtst-testimonial-image .initials {
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  border-radius: 50%;
+  display: table-cell;
+  vertical-align: middle;
+}
+.strong-view.wpmtst-modern .readmore-page {
+  background: #F4F4F4;
+  padding: 0.7em;
+  text-align: center;
+}
+.strong-view.wpmtst-modern .strong-slider-controls.indexed {
+  line-height: 22px;
+  padding: 19px 0;
+}
+.strong-view.wpmtst-modern .strong-slider-controls.indexed .slider-pager span {
+  height: 22px;
+  width: 22px;
+}
+.strong-view.wpmtst-modern .strong-slider-controls.indexed span.slider-pager-active {
+  border-radius: 50%;
+  font-weight: 400;
+}
+
+/* In Widget
+-----------------------------------------------*/
+.widget .strong-view.wpmtst-modern .wpmtst-testimonial-inner {
+  padding: 20px;
+}
+.widget .strong-view.wpmtst-modern.slider-bottom .wpmtst-testimonial-inner {
+  padding-bottom: 40px;
+}
+.widget .strong-view.wpmtst-modern .strong-slider-controls {
+  line-height: 40px;
+}
+.widget .strong-view.wpmtst-modern .wpmtst-testimonial-content {
+  margin: 36px 0;
+}
+.widget .strong-view.wpmtst-modern .wpmtst-testimonial-content:before {
+  left: 0;
+  top: -36px;
+}
+.widget .strong-view.wpmtst-modern .wpmtst-testimonial-content:after {
+  right: 0;
+  bottom: -36px;
+}
+.widget .strong-view.wpmtst-modern .readmore {
+  display: block;
+}
+
+/* Pagination
+-----------------------------------------------*/
+/* Simple pagination
+-----------------------------------------------*/
+.strong-view.wpmtst-modern.strong-pager {
+  display: none;
+}
+
+.simplePagerList {
+  /* match .strong-content container */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.strong-view ul.simplePagerNav {
+  margin: 0 auto;
+  padding: 0;
+  display: inline-block;
+}
+.strong-view ul.simplePagerNav li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.strong-view ul.simplePagerNav li a {
+  border-radius: 50%;
+  display: inline-block;
+  line-height: 1.7em;
+  margin: 0 1px;
+  outline: none;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  min-width: 1.7em;
+}
+.strong-view ul.simplePagerNav li a:hover {
+  background: #CDCDCD;
+}
+.strong-view ul.simplePagerNav li.currentPage a {
+  text-decoration: none;
+  background: #CDCDCD;
+  color: #000;
+}
+
+.strong-view.rtl ul.simplePagerNav li {
+  float: right;
+}
+
+/* Standard pagination
+-----------------------------------------------*/
+.strong-view .nav-links {
+  margin: 20px auto;
+  text-align: center;
+}
+.strong-view .nav-links a, .strong-view .nav-links span {
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  transition: background 0.2s ease;
+}
+.strong-view .nav-links a.current, .strong-view .nav-links span.current {
+  background: #999;
+  color: #FFF;
+}
+.strong-view .nav-links a {
+  outline: none;
+  text-decoration: none;
+}
+.strong-view .nav-links a:hover,
+.strong-view .nav-links a.prev:hover,
+.strong-view .nav-links a.next:hover,
+.strong-view .nav-links span:hover {
+  background: #BBB;
+  color: #FFF;
+}
+
+/* Slideshow
+-----------------------------------------------*/
+.strong-view.wpmtst-modern.slider-container .strong-content {
+  margin: 0 auto;
+}
+.strong-view.wpmtst-modern.slider-container .wpmtst-testimonial:not(:first-child) {
+  display: none;
+}
+.strong-view.wpmtst-modern.nav-position-inside .wpmtst-testimonial-inner {
+  padding-bottom: 60px;
+}
+.strong-view.wpmtst-modern.controls-type-sides .wpmtst-testimonial-inner {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+/* Responsive
+-----------------------------------------------*/
+@media only screen and (max-width: 480px) {
+  .strong-view.wpmtst-modern .wpmtst-testimonial-inner {
+    padding: 15px;
+  }
+  .strong-view.wpmtst-modern .wpmtst-testimonial-content {
+    margin: 0;
+    font-size: 1.1em;
+    /* move quotes from left/right to top/bottom */
+  }
+  .strong-view.wpmtst-modern .wpmtst-testimonial-content:before {
+    position: static;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .strong-view.wpmtst-modern .wpmtst-testimonial-content:after {
+    position: static;
+    float: right;
+    margin-top: 10px;
+  }
+  .strong-view.wpmtst-modern .wpmtst-testimonial-name {
+    font-size: 1.1em;
+  }
+}
+
+
+.disabled { 
+  display: none!important;
+}
+
+.wpmslider-controls.disabled {
+    display: block !important;
+}
+
+/*  Compatibility with metaslider pro layers display
+----------------------------------------------------*/
+
+.msHtmlOverlay .layer .disabled {
+    display: block !important;
+}
+/**
+ * Strong Testimonials Simple Form template
+ */
+.strong-form {
+  position: relative;
+  margin: 0 auto;
+}
+.strong-form .form-field {
+  margin-bottom: 1.5em;
+}
+.strong-form .form-field.wpmtst-submit {
+  margin-bottom: 0;
+}
+.strong-form .required.symbol:after {
+  content: '*';
+  color: #FF0000;
+  font-size: 1.5em;
+  font-weight: 400;
+  margin: 0 5px;
+  position: relative;
+  top: 5px;
+}
+.strong-form label {
+  display: inline-block;
+  float: none;
+  width: auto;
+}
+.strong-form input[type="text"],
+.strong-form input[type="email"],
+.strong-form input[type="url"],
+.strong-form input[type="file"],
+.strong-form select,
+.strong-form textarea {
+  box-sizing: border-box;
+  display: block;
+  float: none;
+  width: 100%;
+}
+.strong-form input[type="checkbox"] {
+  -webkit-transform: scale(1.4);
+  -moz-transform: scale(1.4);
+  -ms-transform: scale(1.4);
+  transform: scale(1.4);
+  margin-left: 12px;
+  margin-right: 6px;
+}
+.strong-form input[type="checkbox"] + label {
+  font-weight: 400;
+  padding: 5px;
+}
+.strong-form input[type="checkbox"]:focus + label {
+  outline: 1px solid #CCC;
+}
+.strong-form textarea {
+  height: 16em;
+}
+.strong-form span.error,
+.strong-form label.error {
+  display: block;
+}
+.strong-form .before {
+  display: block;
+}
+.strong-form .after {
+  display: block;
+}
+
+.strong-form-inner {
+  padding: 20px;
+}
+
+input.captcha {
+  display: block;
+  width: auto;
+}
+
+img.captcha {
+  border: 0;
+}
+
+.wpmtst-captcha {
+  margin-bottom: 1em;
+}
+
+/* category checklist */
+.strong-form ul.strong-category-list,
+.strong-form ul.strong-category-list ul.children {
+  list-style-type: none;
+}
+.strong-form ul.strong-category-list label,
+.strong-form ul.strong-category-list ul.children label {
+  font-weight: 400;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+.strong-form ul.strong-category-list {
+  margin: 0;
+  padding-left: 0;
+}
+.strong-form ul.strong-category-list ul.children {
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+/* The "wait" spinner on form submission.
+-----------------------------------------------*/
+.strong-form-wait {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+.strong-form-wait .message {
+  position: absolute;
+  top: calc( 50% - 25px );
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  color: #111;
+}
+
+.strong-form-wait .message img {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+@keyframes wpmtst-spin{
+  0%{
+      transform: rotate(360deg);
+      }
+  100%{
+      transform: rotate(0deg);
+      }
+}
+
+.strong-form-wait .message img{
+  animation: wpmtst-spin 2.5s infinite 0s linear;
+}
+
+.strong-form {
+  /* error indicators */
+  /* field-wrap is used for checkboxes, radios, star ratings */
+}
+.strong-form input.error,
+.strong-form textarea.error,
+.strong-form select.error {
+  background: #F9E5E6;
+  border: 1px solid #E8AAAD;
+  color: #B50007;
+}
+.strong-form span.error,
+.strong-form label.error {
+  color: #B50007;
+}
+.strong-form .field-wrap {
+  display: block;
+  font-weight: 400;
+  border: 1px solid transparent;
+}
+.strong-form .field-wrap.error {
+  background: #F9E5E6;
+  border: 1px solid #E8AAAD;
+  color: #B50007;
+}
+.strong-form .field-wrap.error .checkbox-label {
+  outline: none;
+}
+.strong-form .field-wrap.error .strong-rating {
+  outline-color: #E8AAAD;
+}
+.strong-form .field-wrap input + label + .required.symbol:after {
+  margin-left: 0;
+}
+
+/**
+ * Strong Testimonials Simple template
+ */
+/* Clears
+-----------------------------------------------*/
+.clear {
+  clear: both;
+}
+
+/**
+Minimum paragraph width means no short words in skinny space next to image
+in columns or small screens.
+
+This workaround is needed until we can use flexbox properly
+or CSS offers container queries.
+
+Thanks https://css-tricks.com/minimum-paragraph-widths/
+*/
+.maybe-clear {
+  content: "";
+  /* this value seems to work well in both responsive and Masonry */
+  width: 6em;
+  display: block;
+  overflow: hidden;
+}
+
+/* Base
+-----------------------------------------------*/
+.strong-view.wpmtst-simple {
+  display: block;
+  width: 100%;
+}
+.strong-view.wpmtst-simple div {
+  box-sizing: border-box;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial {
+  max-height: none;
+  max-width: none;
+  padding: 0;
+  width: 100%;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial.t-slide {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-image {
+  max-width: 100%;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-field-before {
+  margin-right: 0.5em;
+}
+.strong-view.wpmtst-simple a.readmore,
+.strong-view.wpmtst-simple a.readmore-toggle {
+  white-space: nowrap;
+  z-index: 100;
+}
+.strong-view.wpmtst-simple a.readmore-toggle:hover {
+  cursor: pointer;
+}
+
+.strong-view.slider-container {
+  opacity: 1;
+}
+.strong-view .screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* Template
+-----------------------------------------------*/
+.strong-view.wpmtst-simple .strong-content {
+  margin: 1em auto;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial {
+  margin: 1em auto;
+  text-align: left;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial:first-child {
+  margin-top: 0;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial:last-child {
+  margin-bottom: 0;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-inner {
+  padding: 1em;
+  text-align: left;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-inner > *:not(:nth-last-child(2)):not(:last-child) {
+	margin-bottom: 5px;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-heading {
+  margin-top: 0;
+  margin-bottom: 1em;
+  text-align: left;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-content p:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-content p:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-image {
+  float: left;
+  margin-top: .25em;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-image img {
+  background: none;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-image a {
+  text-decoration: none;
+  box-shadow: none;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-image .initials {
+  background: none;
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+}
+.strong-view.wpmtst-simple .wpmtst-testimonial-field {
+  clear: both;
+}
+.strong-view.wpmtst-simple .readmore {
+  margin-top: 1em;
+}
+.strong-view.wpmtst-simple .readmore-page {
+  padding: 1em;
+  text-align: center;
+}
+
+/* Pagination
+-----------------------------------------------*/
+/* Simple pagination
+-----------------------------------------------*/
+.strong-view.wpmtst-simple.strong-pager {
+  display: none;
+}
+
+.simplePagerList {
+  /* match .strong-content container */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.strong-view ul.simplePagerNav {
+  margin: 0 auto;
+  padding: 0;
+  display: inline-block;
+}
+.strong-view ul.simplePagerNav li {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.strong-view ul.simplePagerNav li a {
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  outline: none;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+.strong-view ul.simplePagerNav li a:hover {
+  background: #BBB;
+  color: #FFF;
+}
+.strong-view ul.simplePagerNav li.currentPage a {
+  text-decoration: none;
+  background: #999;
+  color: #FFF;
+}
+
+.strong-view.rtl ul.simplePagerNav li {
+  float: right;
+}
+
+/* Standard pagination
+-----------------------------------------------*/
+.strong-view .nav-links {
+  margin: 20px auto;
+  text-align: center;
+}
+.strong-view .nav-links a, .strong-view .nav-links span {
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0 0.2em;
+  padding: 0.1em 0.3em;
+  transition: background 0.2s ease;
+}
+.strong-view .nav-links a.current, .strong-view .nav-links span.current {
+  background: #999;
+  color: #FFF;
+}
+.strong-view .nav-links a {
+  outline: none;
+  text-decoration: none;
+}
+.strong-view .nav-links a:hover,
+.strong-view .nav-links a.prev:hover,
+.strong-view .nav-links a.next:hover,
+.strong-view .nav-links span:hover {
+  background: #BBB;
+  color: #FFF;
+}
+
+/* Slideshow
+-----------------------------------------------*/
+.strong-view.wpmtst-simple.slider-container .strong-content {
+  margin: 0 auto;
+}
+.strong-view.wpmtst-simple.slider-container .wpmtst-testimonial:not(:first-child) {
+  display: none;
+}
+.strong-view.wpmtst-simple.nav-position-inside .wpmtst-testimonial-inner {
+  padding-bottom: 48px;
+}
+.strong-view.wpmtst-simple.controls-type-sides .wpmtst-testimonial-inner {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+/* Responsive
+-----------------------------------------------*/
+@media only screen and (max-width: 320px) {
+  .strong-view.wpmtst-simple .wpmtst-testimonial-image {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+/* RTL
+-----------------------------------------------*/
+.strong-view.wpmtst-simple.rtl .wpmtst-testimonial,
+.strong-view.wpmtst-simple.rtl .wpmtst-testimonial-inner,
+.strong-view.wpmtst-simple.rtl .wpmtst-testimonial-heading {
+  text-align: right;
+}
+.strong-view.wpmtst-simple.rtl .wpmtst-testimonial-image {
+  float: right;
+  margin-left: 1em;
+}
+.strong-view.wpmtst-simple.rtl .wpmtst-testimonial-field {
+  text-align: left;
+}
+.disabled {
+  display : none!important;
+}
+
+.wpmslider-controls.disabled {
+    display: block !important;
+}
+
+/*  Compatibility with metaslider pro layers display
+----------------------------------------------------*/
+
+.msHtmlOverlay .layer .disabled {
+    display: block !important;
+}
+/**
+ * Strong Testimonials Unstyled Form template
+ */
+/* The "wait" spinner on form submission.
+-----------------------------------------------*/
+.wpmtst-unstyled-form {
+  position: relative;
+}
+
+.strong-form-wait {
+  display: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+.strong-form-wait .message {
+  position: absolute;
+  top: calc( 50% - 25px );
+  text-align: center;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  color: #111;
+}
+
+.strong-form-wait .message img {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+@keyframes wpmtst-spin{
+  0%{
+      transform: rotate(360deg);
+      }
+  100%{
+      transform: rotate(0deg);
+      }
+}
+
+.strong-form-wait .message img{
+  animation: wpmtst-spin 2.5s infinite 0s linear;
+}
+.disabled {
+    display:none !important;
+}
+
+.wpmslider-controls.disabled {
+    display: block !important;
+}
+
+/*  Compatibility with metaslider pro layers display
+----------------------------------------------------*/
+
+.msHtmlOverlay .layer .disabled {
+    display: block !important;
+}
+/**
+ * Column layout for any template using CSS multi-column.
+ */
+
+/*
+ * global
+ */
+.strong-content.strong-columns {
+	display: block;
+
+	/* a minimum width fallback */
+	-webkit-column-width: 200px;
+	   -moz-column-width: 200px;
+	        column-width: 200px;
+
+	-webkit-column-gap: 20px;
+	   -moz-column-gap: 20px;
+	        column-gap: 20px;
+}
+
+.strong-content.strong-columns .wpmtst-testimonial {
+	-webkit-column-break-inside: avoid;
+	page-break-inside: avoid;
+	break-inside: avoid;
+}
+
+/*
+ * 2 columns
+ */
+.strong-content.strong-columns.columns-2 {
+	-webkit-column-count: 2;
+	   -moz-column-count: 2;
+	        column-count: 2;
+}
+
+/*
+ * 3 columns
+ */
+.strong-content.strong-columns.columns-3 {
+	-webkit-column-count: 3;
+	   -moz-column-count: 3;
+	        column-count: 3;
+}
+
+/*
+ * 4 columns
+ */
+.strong-content.strong-columns.columns-4 {
+	-webkit-column-count: 4;
+	   -moz-column-count: 4;
+	        column-count: 4;
+}
+
+/*
+ * responsive
+ */
+@media screen and (max-width: 667px) {
+	.strong-content.strong-columns {
+		-webkit-column-count: 1;
+		   -moz-column-count: 1;
+		        column-count: 1;
+	}
+}
+
+/**
+ * Grid Layout for any template.
+ */
+
+.strong-grid {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+
+  /* to center items in a less-than-full row: */
+  justify-content: space-around;
+  /* to left-justify items in a less-than-full row: */
+  /*justify-content: space-between;*/
+}
+
+/* specificity required */
+.strong-view .strong-content.strong-grid .wpmtst-testimonial {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 0 20px 0;
+}
+
+.strong-content.strong-grid.columns-2 .wpmtst-testimonial {
+  width: 48%;
+}
+
+.strong-content.strong-grid.columns-3 .wpmtst-testimonial {
+  width: 31%;
+}
+
+.strong-content.strong-grid.columns-4 .wpmtst-testimonial {
+  width: 23%;
+}
+
+.strong-view .strong-content.strong-grid .wpmtst-testimonial-inner {
+  flex: 1 0 auto;
+}
+
+/* either no JavaScript or no Flexbox */
+html.no-js .strong-grid .wpmtst-testimonial,
+.strong-grid.noflex .wpmtst-testimonial {
+  float: left;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+html.no-js .strong-grid .wpmtst-testimonial {
+  float: left;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+/* float the last column */
+.strong-grid.columns-2.noflex .wpmtst-testimonial:nth-of-type(2n+2),
+.strong-grid.columns-3.noflex .wpmtst-testimonial:nth-of-type(3n+3),
+.strong-grid.columns-4.noflex .wpmtst-testimonial:nth-of-type(4n+4) {
+  float: right;
+}
+
+/* responsive */
+@media only screen and (max-width: 480px) {
+  .strong-view .strong-content.strong-grid .wpmtst-testimonial {
+    width: 100%;
+  }
+}
+
+/**
+ * To add Masonry to any template.
+ *
+ * Element sizing for responsive layouts with percentage widths.
+ * 2 columns --> 2 x grid-sizer + 1 x gutter-sizer = 100%
+ * 3 columns --> 3 x grid-sizer + 2 x gutter-sizer = 100%
+ * 4 columns --> 4 x grid-sizer + 3 x gutter-sizer = 100%
+ */
+
+/*----------------------------------------------------------
+ * global tweaks
+ *----------------------------------------------------------*/
+.strong-content.strong-masonry .wpmtst-testimonial {
+	margin-top: 0;
+}
+
+/*----------------------------------------------------------
+ * default: 1 column
+ *----------------------------------------------------------*/
+.strong-masonry .wpmtst-testimonial,
+.strong-masonry .grid-sizer {
+	width: 100%;
+}
+
+.strong-masonry .gutter-sizer {
+	width: 0;
+}
+
+.strong-masonry .wpmtst-testimonial.grid-item--width2 {
+	width: 100%;
+}
+
+/*----------------------------------------------------------
+ * responsive
+ *----------------------------------------------------------*/
+@media only screen and (min-width: 480px) {
+
+	/*----------------------------------------------------------
+	 * 2 columns
+	 *----------------------------------------------------------*/
+	.strong-masonry.columns-2 .wpmtst-testimonial,
+	.strong-masonry.columns-2 .grid-sizer {
+		width: 48.5%;
+	}
+
+	.strong-masonry.columns-2 .gutter-sizer {
+		width: 3%;
+	}
+
+	.strong-masonry.columns-2 .wpmtst-testimonial.grid-item--width2 {
+		width: 97%;
+	}
+
+	/*----------------------------------------------------------
+	 * 3 columns
+	 *----------------------------------------------------------*/
+	.strong-masonry.columns-3 .wpmtst-testimonial,
+	.strong-masonry.columns-3 .grid-sizer {
+		width: 31.33%;
+	}
+
+	.strong-masonry.columns-3 .gutter-sizer {
+		width: 3%;
+	}
+
+	.strong-masonry.columns-3 .wpmtst-testimonial.grid-item--width2 {
+		width: 62.66%;
+	}
+
+	/*----------------------------------------------------------
+	 * 4 columns
+	 *----------------------------------------------------------*/
+	.strong-masonry.columns-4 .wpmtst-testimonial,
+	.strong-masonry.columns-4 .grid-sizer {
+		width: 22.75%;
+	}
+
+	.strong-masonry.columns-4 .gutter-sizer {
+		width: 3%;
+	}
+
+	.strong-masonry.columns-4 .wpmtst-testimonial.grid-item--width2 {
+		width: 45.5%;
+	}
+}

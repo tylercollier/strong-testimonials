@@ -15,8 +15,16 @@ const {
 } = wp.components;
 
 const Inspector = (props) => {
-	const { attributes, setAttributes, testimonialsFetch, dispatch } = props;
 	const {
+		attributes,
+		setAttributes,
+		testimonialsFetch,
+		dispatch,
+		destroyMasonry,
+		masonryObj
+	} = props;
+	const {
+		id,
 		layout,
 		columns,
 		testimonialsToShow,
@@ -25,7 +33,6 @@ const Inspector = (props) => {
 		selectedCategories,
 		orderBy,
 	} = attributes;
-
 
 	return (
 		<>
@@ -55,7 +62,12 @@ const Inspector = (props) => {
 								value: 'grid',
 							},
 						]}
-						onChange={(value) => setAttributes({ layout: value })}
+						onChange={(value) => {
+							if ('masonry' != value) {
+								destroyMasonry(id, masonryObj);
+							}
+							setAttributes({ layout: value });
+						}}
 					/>
 					{layout != '' && (
 						<RangeControl
