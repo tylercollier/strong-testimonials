@@ -46,10 +46,6 @@ class ViewDisplay {
 				type: 'number',
 				default: 0,
 			},
-			maxTestimonialCount: {
-				type: 'number',
-				default: -1,
-			},
 			testimonials: {
 				type: 'array',
 				default: [],
@@ -65,6 +61,20 @@ class ViewDisplay {
 			orderBy: {
 				type: 'string',
 				default: 'desc',
+			},
+			pagination: {
+				type: 'boolean',
+				default: false,
+			},
+			query: {
+				type: 'object',
+				default: {
+					per_page: -1,
+					pages: 0,
+					offset: 0,
+					order: 'desc',
+					orderBy: 'date',
+				},
 			},
 		};
 

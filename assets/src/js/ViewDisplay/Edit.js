@@ -4,7 +4,8 @@ import Inspector from './Inspector';
 import { getTestimonialsCategories, getTestimonials } from '../components/Rest';
 
 const { __ } = wp.i18n;
-const { Component, Fragment, useEffect, useReducer, useState } = wp.element;
+const { Component, Fragment, useEffect, useReducer, useState, useRef } =
+	wp.element;
 const { withSelect, useSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
 const { BlockControls } = wp.blockEditor;
@@ -27,6 +28,35 @@ function reducer(initialState, action) {
 			});
 
 			return initialState;
+		case 'TESTIMONIALSTOSHOWCHANGE':
+			if (action.payload.value != '') {
+				action.payload.setAttributes({
+					testimonialsToShow: parseInt(action.payload.value),
+					testimonials: [],
+				});
+			}
+			return initialState;
+
+		case 'OFFSETCHANGE':
+			action.payload.setAttributes({
+				query: {
+					...action.payload.query,
+					offset: parseInt(action.payload.value),
+				},
+				testimonials: [],
+			});
+			return initialState;
+
+		case 'PAGESCHANGE':
+			action.payload.setAttributes({
+				query: {
+					...action.payload.query,
+					pages: parseInt(action.payload.value),
+				},
+				testimonials: [],
+			});
+			return initialState;
+
 		default:
 			return initialState;
 	}
@@ -41,11 +71,13 @@ export const ViewDisplayEdit = (props) => {
 		selectedCategories,
 		orderBy,
 		id,
+		query: newQuery,
 	} = attributes;
 
 	const [initialState, dispatch] = useReducer(reducer, {
 		orderBy: orderBy,
 		selectedCategories: selectedCategories,
+		testimonialsToShow: testimonialsToShow,
 	});
 
 	const testimonialsFetch = useSelect((select) => {
@@ -54,6 +86,8 @@ export const ViewDisplayEdit = (props) => {
 			post_status: 'publish',
 			per_page: 0 == testimonialsToShow ? -1 : testimonialsToShow,
 			order: 'asc' == orderBy ? 'asc' : 'desc',
+			offset: newQuery.offset,
+			pages: newQuery.pages,
 		};
 
 		if (selectedCategories.length != 0 && selectedCategories.join() != '') {
@@ -122,21 +156,6 @@ export const ViewDisplayEdit = (props) => {
 	 */
 	useEffect(() => {
 		if (testimonials.length != 0) {
-			//Handle change of number of testimonials
-			if (
-				testimonialsToShow != 0 &&
-				testimonialsToShow !== testimonials.length
-			) {
-				let currentTestimonials = testimonials.length;
-
-				if (currentTestimonials < testimonialsToShow) {
-					setAttributes({ testimonials: testimonialsFetch });
-				}
-
-				if (currentTestimonials > testimonialsToShow) {
-					setAttributes({ testimonials: testimonialsFetch });
-				}
-			}
 		} else {
 			if (testimonialsFetch.length == 0) {
 				setAttributes({ status: 'loading' });
@@ -147,8 +166,6 @@ export const ViewDisplayEdit = (props) => {
 				setAttributes({
 					status: 'ready',
 					testimonials: testimonialsFetch,
-					//get the max test count , so we don't exced the max in the inspector . runs only once
-					maxTestimonialCount: testimonialsFetch.length,
 				});
 			}
 		}
@@ -159,10 +176,22 @@ export const ViewDisplayEdit = (props) => {
 	 */
 	useEffect(() => {
 		getTestimonials(attributes, setAttributes, testimonialsFetch);
-	}, [orderBy, selectedCategories]);
+	}, [orderBy, selectedCategories, testimonialsToShow]);
 
 	if (status === 'loading') {
-		return [<Loading status={status} />];
+		return [
+			<>
+				<Inspector
+					{...props}
+					testimonialsFetch={testimonialsFetch}
+					dispatch={dispatch}
+					getTestimonials={getTestimonials}
+					destroyMasonry={destroyMasonry}
+					masonryObj={masonryObj}
+				/>
+				<Loading status={status} />
+			</>,
+		];
 	}
 
 	return (

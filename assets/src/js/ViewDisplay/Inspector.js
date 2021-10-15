@@ -12,6 +12,8 @@ const {
 	RangeControl,
 	SelectControl,
 	__experimentalNumberControl,
+	__experimentalInputControl,
+	ToggleControl,
 } = wp.components;
 
 const Inspector = (props) => {
@@ -21,17 +23,18 @@ const Inspector = (props) => {
 		testimonialsFetch,
 		dispatch,
 		destroyMasonry,
-		masonryObj
+		masonryObj,
 	} = props;
 	const {
 		id,
 		layout,
 		columns,
 		testimonialsToShow,
-		maxTestimonialCount,
 		allTestimonialsCategories,
 		selectedCategories,
+		pagination,
 		orderBy,
+		query,
 	} = attributes;
 
 	return (
@@ -52,14 +55,6 @@ const Inspector = (props) => {
 							{
 								label: __('Masonry', 'strong-testimonials'),
 								value: 'masonry',
-							},
-							{
-								label: __('Columns', 'strong-testimonials'),
-								value: 'columns',
-							},
-							{
-								label: __('Grid', 'strong-testimonials'),
-								value: 'grid',
 							},
 						]}
 						onChange={(value) => {
@@ -84,15 +79,16 @@ const Inspector = (props) => {
 						<label>No. of testimonials</label>
 						<__experimentalNumberControl
 							isShiftStepEnabled={true}
-							onChange={(value) =>
-								setAttributes({
-									testimonialsToShow: parseInt(value),
-								})
-							}
+							onChange={(value) => {
+								dispatch({
+									type: 'TESTIMONIALSTOSHOWCHANGE',
+									payload: { value, setAttributes },
+								});
+							}}
 							shiftStep={10}
 							value={testimonialsToShow}
-							min={-1}
-							max={maxTestimonialCount}
+							min={0}
+							max={100}
 						/>
 					</>
 				</PanelBody>
@@ -136,13 +132,93 @@ const Inspector = (props) => {
 								value: 'asc',
 							},
 						]}
-						onChange={(value) =>
+						onChange={(value) => {
 							dispatch({
 								type: 'ORDERBYCHANGE',
 								payload: { value, setAttributes },
-							})
+							});
+						}}
+					/>
+				</PanelBody>
+				<PanelBody
+					title={__('Pagination', 'strong-testimonials')}
+					initialOpen={true}
+				>
+					<ToggleControl
+						label={__('Toggle Pagination', 'strong-testimonials')}
+						checked={pagination}
+						help={
+							pagination
+								? __(
+										'Pagination is turned on',
+										'strong-testimonials'
+								  )
+								: __(
+										'Pagination is turned off',
+										'strong-testimonials'
+								  )
+						}
+						onChange={() =>
+							setAttributes({ pagination: !pagination })
 						}
 					/>
+					{pagination && (
+						<>
+							<__experimentalInputControl
+								type="number"
+								label={__(
+									'Items Per Page',
+									'strong-testimonials'
+								)}
+								min={1}
+								max={100}
+								value={testimonialsToShow}
+								onChange={(value) => {
+									dispatch({
+										type: 'TESTIMONIALSTOSHOWCHANGE',
+										payload: { value, setAttributes },
+									});
+								}}
+							/>
+							<__experimentalInputControl
+								type="number"
+								label={__('Offset', 'strong-testimonials')}
+								min={0}
+								max={100}
+								onChange={(value) => {
+									dispatch({
+										type: 'OFFSETCHANGE',
+										payload: {
+											value,
+											setAttributes,
+											query,
+										},
+									});
+								}}
+								value={query.offset}
+							/>
+							<__experimentalInputControl
+								type="number"
+								label={__(
+									'Max Pages To Show',
+									'strong-testimonials'
+								)}
+								min={0}
+								max={100}
+								value={query.pages}
+								onChange={(value) => {
+									dispatch({
+										type: 'PAGESCHANGE',
+										payload: {
+											value,
+											setAttributes,
+											query,
+										},
+									});
+								}}
+							/>
+						</>
+					)}
 				</PanelBody>
 			</InspectorControls>
 		</>

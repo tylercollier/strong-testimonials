@@ -13,3 +13,25 @@ div.st-block-preview{background:white;padding:50px 25px;border:1px solid black}d
     padding: 5px;
     border-radius: 10px;
 }
+
+.strong-view .pagination {
+	display: flex;
+    width: 50%;
+}
+
+.strong-view .st-previous {
+	margin-right: 5px;
+}
+.strong-view .st-next {
+	margin-left: 5px;
+}
+
+.strong-view .pages {
+	width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.strong-view .pages a:not(.dots) {
+	text-decoration: underline;
+}
