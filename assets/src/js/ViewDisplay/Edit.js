@@ -213,23 +213,4 @@ export const ViewDisplayEdit = (props) => {
 	);
 };
 
-const applyWithSelect = withSelect((select, props) => {
-	const { getEntityRecords } = select('core');
-	const query = {
-		post_status: 'publish',
-		per_page: -1,
-	};
-
-	return {
-		testimonials:
-			getEntityRecords('postType', 'wpm-testimonial', query) || [],
-	};
-});
-
-const applyWithFilters = wp.components.withFilters(
-	'wpst.StrongTestimonialViewEdit'
-);
-
-// export default compose(applyWithSelect, applyWithFilters)(StrongTestimonialViewEdit);
-
 export default ViewDisplayEdit;
