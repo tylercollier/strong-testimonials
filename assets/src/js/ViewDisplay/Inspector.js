@@ -220,6 +220,9 @@ const Inspector = (props) => {
 						</>
 					)}
 				</PanelBody>
+				<PanelBody initialOpen={true} title={__('Template Settings', 'strong-testimonials')}>
+
+				</PanelBody>
 			</InspectorControls>
 		</>
 	);

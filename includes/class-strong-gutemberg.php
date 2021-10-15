@@ -56,7 +56,7 @@ class Strong_Gutemberg {
 			'layout'   => ''
 		);
 
-		wp_enqueue_script( 'st-selectize', WPMTST_PUBLIC_URL . 'js/selectize.js', null, MODULA_LITE_VERSION, true );
+		wp_enqueue_script( 'st-selectize', WPMTST_PUBLIC_URL . 'js/selectize.js', null, WPMTST_VERSION, true );
 		wp_enqueue_style( 'st-selectize', WPMTST_PUBLIC_URL . 'css/selectize.default.css' );
 
 		wp_parse_args( $this->attributes, $attributes_defaults );
