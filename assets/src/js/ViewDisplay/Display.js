@@ -32,6 +32,7 @@ export const Display = (props) => {
 							<Testimonial
 								testimonial={testimonial}
 								index={index}
+								initMasonry={initMasonry}
 								{...props}
 							/>,
 						];

@@ -4,7 +4,7 @@ import ViewSelectControl from './ViewSelectControl';
  * WordPress dependencies
  */
 const { __ } = wp.i18n;
-const { Fragment } = wp.element;
+const { Fragment, useState } = wp.element;
 const { InspectorControls } = wp.blockEditor;
 const {
 	Button,
@@ -14,6 +14,8 @@ const {
 	__experimentalNumberControl,
 	__experimentalInputControl,
 	ToggleControl,
+	__experimentalRadio,
+	__experimentalRadioGroup,
 } = wp.components;
 
 const Inspector = (props) => {
@@ -35,7 +37,34 @@ const Inspector = (props) => {
 		pagination,
 		orderBy,
 		query,
+		template,
 	} = attributes;
+
+	const TemplateRadioGroup = () => {
+		return (
+			<__experimentalRadioGroup
+				label={__('Type', 'strong-testimonials')}
+				onChange={(value) => {
+					setAttributes({ template: value });
+				}}
+				checked={template}
+			>
+				<__experimentalRadio value="default">
+					{__('Default', 'strong-testimonials')}
+				</__experimentalRadio>
+				<__experimentalRadio value="modern">
+					{__('Modern', 'strong-testimonials')}
+				</__experimentalRadio>
+				<__experimentalRadio value="bold">{__('Bold', 'strong-testimonials')}</__experimentalRadio>
+				<__experimentalRadio value="simple">
+					{__('Simple', 'strong-testimonials')}
+				</__experimentalRadio>
+				<__experimentalRadio value="unstyled">
+					{__('Unstyled', 'strong-testimonials')}
+				</__experimentalRadio>
+			</__experimentalRadioGroup>
+		);
+	};
 
 	return (
 		<>
@@ -220,8 +249,11 @@ const Inspector = (props) => {
 						</>
 					)}
 				</PanelBody>
-				<PanelBody initialOpen={true} title={__('Template Settings', 'strong-testimonials')}>
-
+				<PanelBody
+					initialOpen={true}
+					title={__('Template Settings', 'strong-testimonials')}
+				>
+					{TemplateRadioGroup}
 				</PanelBody>
 			</InspectorControls>
 		</>

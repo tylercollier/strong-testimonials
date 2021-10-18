@@ -3,6 +3,7 @@ import { generateFeaturedImage, generateHeading } from './Helper';
 
 export const Testimonial = (props) => {
 	const { testimonial, attributes, viewType } = props;
+	const { layout } = props;
 	const { id, title, content } = testimonial;
 	const { meta } = testimonial.meta;
 

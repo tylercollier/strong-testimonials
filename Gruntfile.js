@@ -119,7 +119,7 @@ module.exports = function( grunt ) {
     concat: {
       css: {
         src: [
-          'templates/bold/content.css', 'templates/default-form/form.css', 'templates/default/content.css','templates/modern/content.css', 'templates/simple-form/form.css', 'templates/simple/content.css', 'templates/unstyled-form/form.css', 'templates/unstyled/content.css', 'public/css/columns.css', 'public/css/grid.css', 'public/css/masonry.css'
+          'templates/bold/content.css', 'templates/default-form/form.css', 'templates/default/content.css','templates/modern/content.css', 'templates/simple-form/form.css', 'templates/simple/content.css', 'templates/unstyled-form/form.css', 'templates/unstyled/content.css', 'public/css/masonry.css'
         ],
         dest: 'admin/css/templates.css'
       },

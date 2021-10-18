@@ -87,6 +87,7 @@ class ViewDisplay {
 			icon: 'editor-quote',
 			category: 'strong-testimonials-view',
 			supports: {
+				align: true,
 				customClassName: false,
 			},
 			attributes: this.blockAttributes,
