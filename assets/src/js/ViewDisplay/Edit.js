@@ -1,7 +1,7 @@
 import Loading from '../components/Loading';
 import Display from './Display';
 import Inspector from './Inspector';
-import { getTestimonialsCategories, getTestimonials } from '../components/Rest';
+import { getTestimonialsCategories } from '../components/Rest';
 
 const { __ } = wp.i18n;
 const { Component, Fragment, useEffect, useReducer, useState, useRef } =
@@ -18,6 +18,7 @@ function reducer(initialState, action) {
 			action.payload.setAttributes({
 				orderBy: action.payload.value,
 				testimonials: [],
+				status: 'loading',
 			});
 			return initialState;
 
@@ -25,6 +26,7 @@ function reducer(initialState, action) {
 			action.payload.setAttributes({
 				selectedCategories: action.payload.value,
 				testimonials: [],
+				status: 'loading',
 			});
 
 			return initialState;
@@ -33,6 +35,7 @@ function reducer(initialState, action) {
 				action.payload.setAttributes({
 					testimonialsToShow: parseInt(action.payload.value),
 					testimonials: [],
+					status: 'loading',
 				});
 			}
 			return initialState;
@@ -44,6 +47,7 @@ function reducer(initialState, action) {
 					offset: parseInt(action.payload.value),
 				},
 				testimonials: [],
+				status: 'loading',
 			});
 			return initialState;
 
@@ -54,6 +58,7 @@ function reducer(initialState, action) {
 					pages: parseInt(action.payload.value),
 				},
 				testimonials: [],
+				status: 'loading',
 			});
 			return initialState;
 
@@ -175,8 +180,15 @@ export const ViewDisplayEdit = (props) => {
 	 * This "useEffect" hook is used solely for changes that happen for properties that change the values of the testimonials
 	 */
 	useEffect(() => {
-		getTestimonials(attributes, setAttributes, testimonialsFetch);
+		const getTestimonials = async() => {
+			const response = await testimonialsFetch;
+			if (response.length != 0) {
+				setAttributes({ status: 'ready', testimonials: response });
+				return response;
+			}
+		}
 	}, [orderBy, selectedCategories, testimonialsToShow]);
+
 
 	if (status === 'loading') {
 		return [
@@ -185,7 +197,6 @@ export const ViewDisplayEdit = (props) => {
 					{...props}
 					testimonialsFetch={testimonialsFetch}
 					dispatch={dispatch}
-					getTestimonials={getTestimonials}
 					destroyMasonry={destroyMasonry}
 					masonryObj={masonryObj}
 				/>
@@ -200,7 +211,6 @@ export const ViewDisplayEdit = (props) => {
 				{...props}
 				testimonialsFetch={testimonialsFetch}
 				dispatch={dispatch}
-				getTestimonials={getTestimonials}
 				destroyMasonry={destroyMasonry}
 				masonryObj={masonryObj}
 			/>

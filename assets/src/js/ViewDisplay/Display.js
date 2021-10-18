@@ -27,16 +27,20 @@ export const Display = (props) => {
 		>
 			<div className={getClassNamesByLayout(layout, columns)}>
 				<Fragment>
-					{testimonials.map((testimonial, index) => {
-						return [
-							<Testimonial
-								testimonial={testimonial}
-								index={index}
-								initMasonry={initMasonry}
-								{...props}
-							/>,
-						];
-					})}
+					{false != testimonials && (
+						<>
+							{testimonials.map((testimonial, index) => {
+								return [
+									<Testimonial
+										testimonial={testimonial}
+										index={index}
+										initMasonry={initMasonry}
+										{...props}
+									/>,
+								];
+							})}
+						</>
+					)}
 				</Fragment>
 			</div>
 			{pagination && (
