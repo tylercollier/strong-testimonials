@@ -71,8 +71,6 @@ class Strong_Gutemberg {
 		wp_enqueue_script( 'verge', WPMTST_PUBLIC_URL . 'js/lib/verge/verge.js', array(), '1.10.2', true );
 		wp_enqueue_script( 'wpmtst-slider', WPMTST_PUBLIC_URL . 'js/lib/strongslider/jquery-strongslider.js', array( 'jquery-actual', 'imagesloaded', 'underscore', 'verge' ), false, true );
 
-		// wp_enqueue_style( 'slider-controls-' . $view['slideshow_settings']['controls_type'] . '-' . $view['slideshow_settings']['controls_style'] );
-
 		wp_enqueue_script( 'wpmtst-slider2' );
 	}
 

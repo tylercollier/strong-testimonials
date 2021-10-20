@@ -1,8 +1,11 @@
 import Loading from '../components/Loading';
 import Slideshow from './Slideshow';
+import Inspector from './Inspector';
 import { getDefaultSlideshowConfig } from './Helper';
+import { getTestimonialsCategories } from '../components/Rest';
+import { reducer } from '../components/Reducer';
 
-const { Component, Fragment, useEffect } = wp.element;
+const { Component, Fragment, useEffect, useReducer } = wp.element;
 const { withSelect, useSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
 const { BlockControls } = wp.blockEditor;
@@ -10,17 +13,58 @@ const { compose } = wp.compose;
 
 export const ViewSlideshowEdit = (props) => {
 	const { setAttributes, attributes } = props;
-	const { status, testimonials, id, template, config } = attributes;
+	const {
+		status,
+		testimonials,
+		testimonialsToShow,
+		selectedCategories,
+		orderBy,
+		id,
+		query: newQuery,
+		slideshowSettings,
+	} = attributes;
+
+	const { config } = slideshowSettings;
+
+	const [initialState, dispatch] = useReducer(reducer, {
+		orderBy: orderBy,
+		selectedCategories: selectedCategories,
+		testimonialsToShow: testimonialsToShow,
+	});
 
 	const testimonialsFetch = useSelect((select) => {
 		const { getEntityRecords } = select('core');
 		const query = {
 			post_status: 'publish',
-			per_page: -1,
+			per_page: 0 == testimonialsToShow ? -1 : testimonialsToShow,
+			order: 'asc' == orderBy ? 'asc' : 'desc',
 		};
+
+		if (selectedCategories.length != 0 && selectedCategories.join() != '') {
+			query['wpm-testimonial-category'] = selectedCategories;
+		}
 
 		return getEntityRecords('postType', 'wpm-testimonial', query) || [];
 	});
+
+	/**
+	 * Initialize defaults . This happens only if no id is found.
+	 */
+	useEffect(() => {
+		if (id == 0) {
+			getTestimonialsCategories(setAttributes);
+			setAttributes({
+				id: Math.floor(Math.random() * (10000 - 1 + 1)) + 1,
+				template: 'default',
+				type: 'single',
+			});
+		}
+
+		if (false == config) {
+			setAttributes({ slideshowSettings: {...slideshowSettings,config: getDefaultSlideshowConfig()} });
+		}
+	}, []);
+
 	/**
 	 * This enables us to always fetch the testimonials and attribute them only
 	 * once
@@ -42,44 +86,33 @@ export const ViewSlideshowEdit = (props) => {
 		}
 	});
 
+	/**
+	 * This "useEffect" hook is used solely for changes that happen for properties that change the values of the query
+	 */
 	useEffect(() => {
-		if( id == 0 && template == '') {
-			setAttributes({
-				id: Math.floor(Math.random() * (10000 - 1 + 1)) + 1,
-				template: 'default',
-			});
-		}
-
-
-		if ( false == config ) {
-			setAttributes({ config: getDefaultSlideshowConfig() });
-		}
-	});
+		const getTestimonials = async () => {
+			const response = await testimonialsFetch;
+			if (response.length != 0) {
+				setAttributes({ status: 'ready', testimonials: response });
+				return response;
+			}
+		};
+	}, [orderBy, selectedCategories, testimonialsToShow]);
 
 	if (status === 'loading') {
 		return [<Loading status={status} />];
 	}
 
-	return <Slideshow {...props} />;
+	return (
+		<>
+			<Inspector
+				{...props}
+				testimonialsFetch={testimonialsFetch}
+				dispatch={dispatch}
+			/>
+			<Slideshow {...props} />
+		</>
+	);
 };
-
-const applyWithSelect = withSelect((select, props) => {
-	const { getEntityRecords } = select('core');
-	const query = {
-		post_status: 'publish',
-		per_page: -1,
-	};
-
-	return {
-		testimonials:
-			getEntityRecords('postType', 'wpm-testimonial', query) || [],
-	};
-});
-
-const applyWithFilters = wp.components.withFilters(
-	'wpst.StrongTestimonialViewEdit'
-);
-
-// export default compose(applyWithSelect, applyWithFilters)(StrongTestimonialViewEdit);
 
 export default ViewSlideshowEdit;

@@ -19,28 +19,19 @@ const {
 } = wp.components;
 
 const Inspector = (props) => {
-	const {
-		attributes,
-		setAttributes,
-		testimonialsFetch,
-		dispatch,
-		destroyMasonry,
-		masonryObj,
-	} = props;
+	const { attributes, setAttributes, testimonialsFetch, dispatch } = props;
 	const {
 		id,
-		layout,
-		columns,
+		slideshowType,
 		testimonialsToShow,
 		allTestimonialsCategories,
 		selectedCategories,
-		pagination,
 		orderBy,
-		query,
 		template,
+		slideshowSettings,
 	} = attributes;
 
-
+	const { buttons, dots } = slideshowSettings;
 
 	const TemplateRadioGroup = () => {
 		return (
@@ -57,7 +48,9 @@ const Inspector = (props) => {
 				<__experimentalRadio value="modern">
 					{__('Modern', 'strong-testimonials')}
 				</__experimentalRadio>
-				<__experimentalRadio value="bold">{__('Bold', 'strong-testimonials')}</__experimentalRadio>
+				<__experimentalRadio value="bold">
+					{__('Bold', 'strong-testimonials')}
+				</__experimentalRadio>
 				<__experimentalRadio value="simple">
 					{__('Simple', 'strong-testimonials')}
 				</__experimentalRadio>
@@ -72,40 +65,72 @@ const Inspector = (props) => {
 		<>
 			<InspectorControls>
 				<PanelBody
-					title={__('Layout Settings', 'strong-testimonials')}
+					title={__('Slideshow Settings', 'strong-testimonials')}
 					initialOpen={true}
 				>
 					<SelectControl
 						label={__('Type', 'strong-testimonials')}
-						value={layout}
+						value={slideshowType}
 						options={[
 							{
-								label: __('List', 'strong-testimonials'),
-								value: '',
+								label: __('Single', 'strong-testimonials'),
+								value: 'show_single',
 							},
 							{
-								label: __('Masonry', 'strong-testimonials'),
-								value: 'masonry',
+								label: __('Multiple', 'strong-testimonials'),
+								value: 'show_multiple',
 							},
 						]}
 						onChange={(value) => {
-							if ('masonry' != value) {
-								destroyMasonry(id, masonryObj);
-							}
-							setAttributes({ layout: value });
+							setAttributes({ slideshowType: value });
 						}}
 					/>
-					{layout != '' && (
-						<RangeControl
-							label={__('Columns', 'strong-testimonials')}
-							value={columns}
-							onChange={(value) =>
-								setAttributes({ columns: value })
-							}
-							min={2}
-							max={4}
-						/>
-					)}
+					<ToggleControl
+						label={__('Buttons', 'strong-testimonials')}
+						checked={buttons}
+						help={
+							buttons
+								? __(
+										'Buttons are turned on',
+										'strong-testimonials'
+								  )
+								: __(
+										'Buttons are turned off',
+										'strong-testimonials'
+								  )
+						}
+						onChange={() =>
+							setAttributes({
+								slideshowSettings: {
+									...slideshowSettings,
+									buttons: !buttons,
+								},
+							})
+						}
+					/>
+					<ToggleControl
+						label={__('Dots', 'strong-testimonials')}
+						checked={dots}
+						help={
+							dots
+								? __(
+										'Dots are turned on',
+										'strong-testimonials'
+								  )
+								: __(
+										'Dots are turned off',
+										'strong-testimonials'
+								  )
+						}
+						onChange={() =>
+							setAttributes({
+								slideshowSettings: {
+									...slideshowSettings,
+									dots: !dots,
+								},
+							})
+						}
+					/>
 					<>
 						<label>No. of testimonials</label>
 						<__experimentalNumberControl
@@ -124,7 +149,7 @@ const Inspector = (props) => {
 					</>
 				</PanelBody>
 				<PanelBody
-					title={__('Testimonial Category', 'strong-testimonials')}
+					title={__('Testimonials Category', 'strong-testimonials')}
 					initialOpen={true}
 				>
 					{undefined != allTestimonialsCategories && (
@@ -170,86 +195,6 @@ const Inspector = (props) => {
 							});
 						}}
 					/>
-				</PanelBody>
-				<PanelBody
-					title={__('Pagination', 'strong-testimonials')}
-					initialOpen={true}
-				>
-					<ToggleControl
-						label={__('Toggle Pagination', 'strong-testimonials')}
-						checked={pagination}
-						help={
-							pagination
-								? __(
-										'Pagination is turned on',
-										'strong-testimonials'
-								  )
-								: __(
-										'Pagination is turned off',
-										'strong-testimonials'
-								  )
-						}
-						onChange={() =>
-							setAttributes({ pagination: !pagination })
-						}
-					/>
-					{pagination && (
-						<>
-							<__experimentalInputControl
-								type="number"
-								label={__(
-									'Items Per Page',
-									'strong-testimonials'
-								)}
-								min={1}
-								max={100}
-								value={testimonialsToShow}
-								onChange={(value) => {
-									dispatch({
-										type: 'TESTIMONIALSTOSHOWCHANGE',
-										payload: { value, setAttributes },
-									});
-								}}
-							/>
-							<__experimentalInputControl
-								type="number"
-								label={__('Offset', 'strong-testimonials')}
-								min={0}
-								max={100}
-								onChange={(value) => {
-									dispatch({
-										type: 'OFFSETCHANGE',
-										payload: {
-											value,
-											setAttributes,
-											query,
-										},
-									});
-								}}
-								value={query.offset}
-							/>
-							<__experimentalInputControl
-								type="number"
-								label={__(
-									'Max Pages To Show',
-									'strong-testimonials'
-								)}
-								min={0}
-								max={100}
-								value={query.pages}
-								onChange={(value) => {
-									dispatch({
-										type: 'PAGESCHANGE',
-										payload: {
-											value,
-											setAttributes,
-											query,
-										},
-									});
-								}}
-							/>
-						</>
-					)}
 				</PanelBody>
 				<PanelBody
 					initialOpen={true}

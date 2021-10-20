@@ -76,6 +76,10 @@ class ViewDisplay {
 					orderBy: 'date',
 				},
 			},
+			align: {
+				type: 'string',
+				default: 'center',
+			},
 		};
 
 		registerBlockType(this.blockName, {
@@ -87,7 +91,8 @@ class ViewDisplay {
 			icon: 'editor-quote',
 			category: 'strong-testimonials-view',
 			supports: {
-				align: true,
+				align: ['center', 'wide', 'left', 'right'],
+				default: 'center',
 				customClassName: false,
 			},
 			attributes: this.blockAttributes,
@@ -106,6 +111,15 @@ class ViewDisplay {
 								status: attributes.status,
 								template: attributes.template,
 								testimonials: attributes.testimonials,
+								testimonialsToShow:
+									attributes.testimonialsToShow,
+								allTestimonialsCategories:
+									attributes.allTestimonialsCategories,
+								selectedCategories:
+									attributes.selectedCategories,
+								orderBy: attributes.orderBy,
+								query: attributes.query,
+								align: attributes.align,
 							});
 						},
 					},
@@ -140,17 +154,45 @@ class ViewSlideshow {
 				type: 'string',
 				default: 'ready',
 			},
+			slideshowType: {
+				type: 'string',
+				default: '',
+			},
 			template: {
 				type: 'string',
 				default: '',
+			},
+			testimonialsToShow: {
+				type: 'number',
+				default: 0,
 			},
 			testimonials: {
 				type: 'array',
 				default: [],
 			},
-			config: {
+			allTestimonialsCategories: {
+				type: 'array',
+				default: [],
+			},
+			selectedCategories: {
+				type: 'array',
+				default: [],
+			},
+			orderBy: {
+				type: 'string',
+				default: 'desc',
+			},
+			align: {
+				type: 'string',
+				default: 'center',
+			},
+			slideshowSettings: {
 				type: 'object',
-				default: false,
+				default: {
+					config: false,
+					button: false,
+					dots: false,
+				},
 			},
 		};
 
@@ -164,6 +206,7 @@ class ViewSlideshow {
 			category: 'strong-testimonials-view',
 			supports: {
 				customClassName: false,
+				align: ['center', 'wide', 'left', 'right'],
 			},
 			attributes: this.blockAttributes,
 			transforms: {

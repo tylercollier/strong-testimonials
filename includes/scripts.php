@@ -169,7 +169,7 @@ function wpmtst_scripts() {
 	                    true );
 
 	wp_register_script( 'wpmtst-slider',
-	                    WPMTST_PUBLIC_URL . "js/lib/strongslider/jquery-strongslider{$min}.js",
+	                    WPMTST_PUBLIC_URL . "js/lib/strongslider/jquery-strongslider.js",
 	                    array( 'jquery-actual', 'imagesloaded', 'underscore', 'verge' ),
 	                    $plugin_version,
 	                    true );
@@ -195,7 +195,7 @@ function wpmtst_scripts() {
                             array(),
                             $plugin_version,
                             true );
-        
+
         wp_register_script( 'wpmtst-lozad-load',
                             WPMTST_PUBLIC_URL . "js/lib/lozad/lozad-load{$min}.js",
                             array(),
@@ -206,7 +206,7 @@ function wpmtst_scripts() {
                    WPMTST_PUBLIC_URL . 'css/lazyload.css',
                    array(),
                    '' );
-        
+
         /*
          * JS random order
          */
