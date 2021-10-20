@@ -20,7 +20,7 @@ export const Slideshow = (props) => {
 			initSliders(
 				{
 					mode: 'horizontal',
-					speed: 1,
+					speed: .1,
 					pause: config.pause,
 					autoHover: config.auto_hover,
 					autoStart: 0,
