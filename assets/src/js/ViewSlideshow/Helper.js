@@ -61,11 +61,18 @@ export const getDefaultSlideshowConfig = () => {
  * @param {object} config
  * @returns classNames
  */
-export const getMainContainerClasses = (id, template, slideshowSettings, slideshowType ) => {
+export const getMainContainerClasses = (id, className, slideshowSettings, slideshowType ) => {
 	///strong-view strong-view-id-1 default wpmtst-default slider-container carousel slider-mode-horizontal slider-adaptive controls-type-sides-outside controls-style-buttons pager-type-full pager-style-buttons nav-position-outside
 
 	//strong-view strong-view-id-3586 default wpmtst-default slider-container slider-mode-fade slider-adaptive carousel slider-mode-horizontal  controls-type-sides controls-style-buttons pager-type-full pager-style-buttons
-	let classNames = `strong-view strong-view-id-${id} ${template} wpmtst-${template} slider-container slider-mode-fade slider-adaptive`;
+	let classNames = `strong-view strong-view-id-${id} slider-container slider-mode-fade slider-adaptive`;
+	let template = '';
+	if( className != undefined ){
+
+		template = className.split('-')[2];
+		classNames += ` ${template} wpmtst-${template}`;
+
+	}
 
 	if( 'show_multiple' == slideshowType ) {
 		classNames += ' carousel slider-mode-horizontal ';

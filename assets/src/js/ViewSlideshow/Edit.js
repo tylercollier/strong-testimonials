@@ -8,7 +8,7 @@ import { reducer } from '../components/Reducer';
 const { Component, Fragment, useEffect, useReducer } = wp.element;
 const { withSelect, useSelect } = wp.data;
 const { SelectControl, Spinner, Toolbar, Button } = wp.components;
-const { BlockControls } = wp.blockEditor;
+const { BlockControls, useBlockProps } = wp.blockEditor;
 const { compose } = wp.compose;
 
 export const ViewSlideshowEdit = (props) => {
@@ -22,6 +22,8 @@ export const ViewSlideshowEdit = (props) => {
 		id,
 		query: newQuery,
 		slideshowSettings,
+		className,
+		slideshowType,
 	} = attributes;
 
 	const { config } = slideshowSettings;
@@ -61,7 +63,12 @@ export const ViewSlideshowEdit = (props) => {
 		}
 
 		if (false == config) {
-			setAttributes({ slideshowSettings: {...slideshowSettings,config: getDefaultSlideshowConfig()} });
+			setAttributes({
+				slideshowSettings: {
+					...slideshowSettings,
+					config: getDefaultSlideshowConfig(),
+				},
+			});
 		}
 	}, []);
 
@@ -86,6 +93,7 @@ export const ViewSlideshowEdit = (props) => {
 		}
 	});
 
+
 	/**
 	 * This "useEffect" hook is used solely for changes that happen for properties that change the values of the query
 	 */
@@ -100,7 +108,16 @@ export const ViewSlideshowEdit = (props) => {
 	}, [orderBy, selectedCategories, testimonialsToShow]);
 
 	if (status === 'loading') {
-		return [<Loading status={status} />];
+		return [
+			<>
+				<Inspector
+					{...props}
+					testimonialsFetch={testimonialsFetch}
+					dispatch={dispatch}
+				/>
+				<Loading status={status} />
+			</>,
+		];
 	}
 
 	return (

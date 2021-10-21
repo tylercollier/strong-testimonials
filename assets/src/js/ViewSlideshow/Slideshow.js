@@ -12,6 +12,7 @@ export const Slideshow = (props) => {
 		slideshowSettings,
 		viewType,
 		slideshowType,
+		className
 	} = attributes;
 	const { config } = slideshowSettings;
 
@@ -20,13 +21,13 @@ export const Slideshow = (props) => {
 			initSliders(
 				{
 					mode: 'horizontal',
-					speed: .1,
+					speed: 0.1,
 					pause: config.pause,
 					autoHover: config.auto_hover,
 					autoStart: 0,
 					infiniteLoop: config.continuous_sliding,
 					stopAutoOnClick: config.stop_auto_on_click,
-					adaptiveHeight: true,
+					adaptiveHeight: false,
 					controls: 1,
 					autoControls: 1,
 					pager: 'full' == config.pager_type ? 1 : 0,
@@ -73,15 +74,15 @@ export const Slideshow = (props) => {
 					nextText: 'text' == config.controls_style ? 'Next' : '',
 					buildPager: 'text' == config.pager_style ? null : 'icons',
 					simpleSetPager: 1,
-				}
+				},
+				id
 			);
 		}
+	}, [slideshowType, slideshowSettings.buttons, slideshowSettings.dots]);
 
-	}, slideshowType);
-
-	const initSliders = (config) => {
+	const initSliders = (config, id) => {
 		let slider = jQuery(
-			`.strong-view-id-${id}.slider-container[data-state="idle"]`
+			`.strong-view-id-${id}.slider-container`
 		).strongSlider(config);
 	};
 	return (
@@ -89,12 +90,11 @@ export const Slideshow = (props) => {
 			<div
 				className={getMainContainerClasses(
 					id,
-					template,
+					className,
 					slideshowSettings,
 					slideshowType
 				)}
 				data-count={testimonials.length}
-				data-slider-var={`strong_slider_id_${id}`}
 				data-state="idle"
 			>
 				{' '}

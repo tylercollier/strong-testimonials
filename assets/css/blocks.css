@@ -58,7 +58,8 @@ div.st-block-preview{background:white;padding:50px 25px;border:1px solid black}d
   /* =pager
   ---------------------------------------------------------*/
   .strong-view .wpmslider-pager {
-	display: inline-block;
+	display: flex;
+    justify-content: center;
   }
   .strong-view.rtl .wpmslider-pager {
 	direction: rtl;
@@ -278,3 +279,4 @@ div.st-block-preview{background:white;padding:50px 25px;border:1px solid black}d
 	/* subtract pager height */
 	top: calc(50% - 55px + 14px);
   }
+

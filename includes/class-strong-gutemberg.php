@@ -21,7 +21,7 @@ class Strong_Gutemberg {
 
 	public function register_block_type() {
 
-		wp_register_script( 'st-block-js', WPMTST_URL . 'assets/js/blocks-js.js', array( 'wp-i18n', 'wp-element', 'wp-editor', 'wp-blocks', 'wp-components', 'wp-api', 'wp-data' ), WPMTST_VERSION );
+		wp_register_script( 'st-block-js', WPMTST_URL . 'assets/js/blocks-js.js', array( 'wp-i18n', 'wp-element', 'wp-editor', 'wp-blocks', 'wp-components', 'wp-api', 'wp-data', 'wp-dom-ready', 'wp-edit-post', 'wp-hooks' ), WPMTST_VERSION );
 
 		wp_register_style( 'st-block-css', WPMTST_URL . 'assets/css/blocks.css', array(), WPMTST_VERSION );
 
@@ -42,6 +42,7 @@ class Strong_Gutemberg {
 				'editor_style'    => 'st-block-css',
 			)
 		);
+
 
 	}
 
@@ -69,9 +70,7 @@ class Strong_Gutemberg {
 		);
 		wp_enqueue_script( 'st-masonry', WPMTST_PUBLIC_URL . 'js/lib/masonry/masonry.min.js', array(), '4.2.2', true );
 		wp_enqueue_script( 'verge', WPMTST_PUBLIC_URL . 'js/lib/verge/verge.js', array(), '1.10.2', true );
-		wp_enqueue_script( 'wpmtst-slider', WPMTST_PUBLIC_URL . 'js/lib/strongslider/jquery-strongslider.js', array( 'jquery-actual', 'imagesloaded', 'underscore', 'verge' ), false, true );
-
-		wp_enqueue_script( 'wpmtst-slider2' );
+		wp_enqueue_script( 'wpmtst-slider4', WPMTST_PUBLIC_URL . 'js/lib/strongslider/jquery-strongslider.js', array( 'jquery-actual', 'imagesloaded', 'underscore', 'verge' ), false, true );
 	}
 
 	public function generate_js_vars() {

@@ -205,10 +205,20 @@ class ViewSlideshow {
 			icon: 'editor-quote',
 			category: 'strong-testimonials-view',
 			supports: {
-				customClassName: false,
 				align: ['center', 'wide', 'left', 'right'],
 			},
 			attributes: this.blockAttributes,
+			styles: [
+				{
+					name: 'default',
+					label: 'Default',
+					isDefault: true,
+				},
+				{ name: 'modern', label: 'Modern' },
+				{ name: 'simple', label: 'Simple' },
+				{ name: 'bold', label: 'Bold' },
+				{ name: 'unstyled', label: 'Unstyled' },
+			],
 			transforms: {
 				to: [
 					{
