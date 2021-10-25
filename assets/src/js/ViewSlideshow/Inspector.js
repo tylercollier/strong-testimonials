@@ -82,7 +82,8 @@ const Inspector = (props) => {
 							},
 						]}
 						onChange={(value) => {
-							setAttributes({ slideshowType: value });
+							setAttributes({ status: 'loading'});
+							setTimeout(()=> {setAttributes({ slideshowType: value, status: 'ready' }); }, 200);
 						}}
 					/>
 					<ToggleControl

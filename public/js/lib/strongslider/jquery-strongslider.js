@@ -1988,7 +1988,6 @@
 
 	  // Store reference to self in order to access public functions later
 	  $(el).data('strongSlider', this);
-
 	  // Set initialized flag on container
 	  viewEl.attr('data-state', 'init');
 

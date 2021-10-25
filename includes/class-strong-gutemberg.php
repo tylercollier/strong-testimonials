@@ -83,6 +83,7 @@ class Strong_Gutemberg {
 				'ajaxURL'      => admin_url( 'admin-ajax.php' ),
 				'testimonials' => $this->get_testimonials(),
 				'gravatar'     => wpmtst_gravatar_url(),
+				'slider'       => '',
 			)
 		);
 	}
